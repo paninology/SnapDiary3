@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class BookListViewController: BaseViewController {
     
@@ -13,25 +14,39 @@ final class BookListViewController: BaseViewController {
     var dataSource: UICollectionViewDiffableDataSource<Int, Book>!
     let mainView = BookListView()
     
+    var bookList: [Book] = [
+        Book(title: "내일기", deckID: ObjectId(), subtitle: "나의 생활에 관한 일기이다."),
+        Book(title: "연애일기", deckID: ObjectId(), subtitle: "여친과 데이트 한 일들을 기록하는 일기이다. ㅇㄴㅁㅇㄴㄹㅁㄴㅇㄹㅁㄴㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㅇㄴㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mainView
         configureDataSource()
-        
+        makeSnapShot(books: bookList)
     }
     
+    override func configure() {
+        super.configure()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addBookButtonClicked))
+    }
+    
+    @objc private func addBookButtonClicked() {
+        transition(AddBookViewController(), transitionStyle: .push)
+    }
     
     
 }
 
+//MARK: CollectionView datasource
 extension BookListViewController {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Book>.init { cell, indexPath, itemIdentifier in
+         cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Book>.init { cell, indexPath, itemIdentifier in
             
             var content = cell.defaultContentConfiguration()
-            content.text = "test"
-            content.textProperties.color = .red
-            content.secondaryText = "안녕하세요"
+             content.text = itemIdentifier.title
+             content.secondaryText = itemIdentifier.subtitle
+             content.image = UIImage(systemName: "person")
             content.prefersSideBySideTextAndSecondaryText = false
             content.textToSecondaryTextVerticalPadding = 20
             cell.contentConfiguration = content
@@ -47,7 +62,7 @@ extension BookListViewController {
         //collectionView.dataSource = self
         //numberOfItemsInSection, cellForItemAt
         dataSource = UICollectionViewDiffableDataSource(collectionView: mainView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            let cell = collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration, for: indexPath, item: itemIdentifier)
 
             return cell
             
@@ -55,11 +70,11 @@ extension BookListViewController {
         
     }
     
-    private func makeSnapShot(book: Book) {
+    private func makeSnapShot(books: [Book]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Book>()
 
         snapshot.appendSections([0])
-        snapshot.appendItems([book], toSection: 0)
+        snapshot.appendItems(books, toSection: 0)
 
         dataSource.apply(snapshot)
     }
