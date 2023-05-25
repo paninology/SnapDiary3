@@ -29,7 +29,7 @@ final class AddBookView: BaseView {
         super.configure()
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(4)
+            make.edges.equalToSuperview()
         }
     }
 }

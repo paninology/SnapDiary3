@@ -32,6 +32,9 @@
 		8FDBC4732A1DCAE900E9B619 /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4722A1DCAE900E9B619 /* AddBookViewController.swift */; };
 		8FDBC4752A1DCE1C00E9B619 /* TextFeildTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4742A1DCE1C00E9B619 /* TextFeildTableViewCell.swift */; };
 		8FDBC4792A1DCFED00E9B619 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4782A1DCFED00E9B619 /* Transition.swift */; };
+		8FDBC47B2A1DE2F700E9B619 /* NotificationSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC47A2A1DE2F700E9B619 /* NotificationSettingViewController.swift */; };
+		8FDBC47D2A1EFBAF00E9B619 /* NotificationOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC47C2A1EFBAF00E9B619 /* NotificationOptionCell.swift */; };
+		8FDBC4802A1F2D7500E9B619 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC47F2A1F2D7500E9B619 /* SwitchTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,9 @@
 		8FDBC4722A1DCAE900E9B619 /* AddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
 		8FDBC4742A1DCE1C00E9B619 /* TextFeildTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFeildTableViewCell.swift; sourceTree = "<group>"; };
 		8FDBC4782A1DCFED00E9B619 /* Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		8FDBC47A2A1DE2F700E9B619 /* NotificationSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingViewController.swift; sourceTree = "<group>"; };
+		8FDBC47C2A1EFBAF00E9B619 /* NotificationOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationOptionCell.swift; sourceTree = "<group>"; };
+		8FDBC47F2A1F2D7500E9B619 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				8FDBC4672A1D993100E9B619 /* BookList */,
-				8FDBC46D2A1DAAC500E9B619 /* NewBook */,
+				8FDBC46D2A1DAAC500E9B619 /* AddBook */,
 				8FDBC46A2A1D9D1900E9B619 /* Write */,
 			);
 			path = Views;
@@ -213,13 +219,15 @@
 			path = Write;
 			sourceTree = "<group>";
 		};
-		8FDBC46D2A1DAAC500E9B619 /* NewBook */ = {
+		8FDBC46D2A1DAAC500E9B619 /* AddBook */ = {
 			isa = PBXGroup;
 			children = (
+				8FDBC47E2A1F24BA00E9B619 /* Cells */,
 				8FDBC46E2A1DAB1000E9B619 /* AddBookView.swift */,
 				8FDBC4722A1DCAE900E9B619 /* AddBookViewController.swift */,
+				8FDBC47A2A1DE2F700E9B619 /* NotificationSettingViewController.swift */,
 			);
-			path = NewBook;
+			path = AddBook;
 			sourceTree = "<group>";
 		};
 		8FDBC4762A1DCE3A00E9B619 /* CustomCells */ = {
@@ -236,6 +244,15 @@
 				8FDBC4782A1DCFED00E9B619 /* Transition.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8FDBC47E2A1F24BA00E9B619 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8FDBC47C2A1EFBAF00E9B619 /* NotificationOptionCell.swift */,
+				8FDBC47F2A1F2D7500E9B619 /* SwitchTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,6 +400,7 @@
 				8FDBC4752A1DCE1C00E9B619 /* TextFeildTableViewCell.swift in Sources */,
 				8FDBC4502A16FDC200E9B619 /* BaseViewController.swift in Sources */,
 				8FDBC45C2A17136C00E9B619 /* Book.swift in Sources */,
+				8FDBC4802A1F2D7500E9B619 /* SwitchTableViewCell.swift in Sources */,
 				8FDBC4712A1DAC1600E9B619 /* Card.swift in Sources */,
 				8FDBC4792A1DCFED00E9B619 /* Transition.swift in Sources */,
 				8FDBC41F2A14AC7700E9B619 /* AppDelegate.swift in Sources */,
@@ -393,7 +411,9 @@
 				8FDBC46F2A1DAB1000E9B619 /* AddBookView.swift in Sources */,
 				8FDBC4532A17043A00E9B619 /* BookListViewController.swift in Sources */,
 				8FDBC4692A1D9D1300E9B619 /* WriteViewController.swift in Sources */,
+				8FDBC47B2A1DE2F700E9B619 /* NotificationSettingViewController.swift in Sources */,
 				8FDBC4602A1B3DEA00E9B619 /* BookListView.swift in Sources */,
+				8FDBC47D2A1EFBAF00E9B619 /* NotificationOptionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

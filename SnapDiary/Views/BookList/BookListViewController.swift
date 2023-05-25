@@ -49,13 +49,15 @@ extension BookListViewController {
              content.image = UIImage(systemName: "person")
             content.prefersSideBySideTextAndSecondaryText = false
             content.textToSecondaryTextVerticalPadding = 20
+             
             cell.contentConfiguration = content
             
             var backgroundConfig = UIBackgroundConfiguration.listPlainCell()
-            backgroundConfig.backgroundColor = .lightGray
+             backgroundConfig.backgroundColor = .systemGroupedBackground
             backgroundConfig.cornerRadius = 10
-            backgroundConfig.strokeWidth = 2
-            backgroundConfig.strokeColor = .systemPink
+            backgroundConfig.strokeWidth = 1
+//            backgroundConfig.strokeColor = .label
+             backgroundConfig.backgroundInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
             cell.backgroundConfiguration = backgroundConfig
         }
         
