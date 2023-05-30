@@ -13,11 +13,11 @@ final class Deck: Object {
     
     @Persisted(primaryKey: true) var objectId: ObjectId
     @Persisted var title: String //제목(필수)
-    @Persisted var questions: List<String> //질문
+    @Persisted var questions: List<Card> //질문
     
     
     
-    convenience init(title: String, questions: List<String>) {
+    convenience init(title: String, questions: List<Card>) {
         self.init()
         self.title = title
         self.questions = questions

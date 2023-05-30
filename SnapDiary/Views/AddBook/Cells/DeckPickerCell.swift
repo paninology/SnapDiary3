@@ -1,22 +1,25 @@
 //
-//  NotificationOptionCell.swift
+//  deckPickerCell.swift
 //  SnapDiary
 //
-//  Created by yongseok lee on 2023/05/25.
+//  Created by yongseok lee on 2023/05/26.
 //
 
 import UIKit
 
-final class NotificationOptionCell: UITableViewCell {
+final class DeckPickerCell: UITableViewCell {
     
-    let datepicker: UIDatePicker = {
-       let view = UIDatePicker()
-        view.datePickerMode = .time
+ 
+    let deckPicker: UIPickerView = {
+       let view = UIPickerView()
+        
         return view
     }()
     
-    let optionPicker: UIPickerView = {
-       let view = UIPickerView()
+    let detailButton: UIButton = {
+       let view = UIButton()
+        view.setTitle("상세보기", for: .normal)
+        view.setTitleColor(.label, for: .normal)
         
         return view
     }()
@@ -24,15 +27,15 @@ final class NotificationOptionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.subviews.forEach { $0.removeFromSuperview() }
-        [datepicker, optionPicker].forEach {addSubview($0)}
-        datepicker.snp.makeConstraints { make in
+        [detailButton, deckPicker].forEach {addSubview($0)}
+        detailButton.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview()
             make.trailing.equalToSuperview().inset(12)
         }
-        optionPicker.snp.makeConstraints { make in
+        deckPicker.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview()
             make.leading.equalToSuperview().inset(8)
-            make.trailing.equalTo(datepicker.snp.leading)
+            make.trailing.equalTo(detailButton.snp.leading)
             
         }
        

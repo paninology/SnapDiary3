@@ -27,7 +27,7 @@ final class SwitchTableViewCell: UITableViewCell {
         addSubview(selectSwitch)
         titleLabel.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview()
-            make.horizontalEdges.leading.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().inset(12)
         }
         selectSwitch.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
