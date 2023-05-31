@@ -7,6 +7,7 @@
 
 import UIKit
 
+//delete logic 수정필요.
 final class CardListViewController: BaseViewController {
 
     var dataSource: UICollectionViewDiffableDataSource<Int, Card>!
@@ -28,7 +29,7 @@ final class CardListViewController: BaseViewController {
         }
     }
  
-    let baseCards = [
+    var baseCards = [
         Card(question: "테스트질문1"),
         Card(question: "오늘 점심메뉴는?"),
         Card(question: "이번주에 아기가 새로 배운 말"),
@@ -46,8 +47,9 @@ final class CardListViewController: BaseViewController {
     
     override func configure() {
         super.configure()
-        mainView.cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+        mainView.dismissButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
         mainView.editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
+        mainView.collectionView.delegate = self
     }
     
     @objc private func cancelButtonPressed(sender: UIButton) {
@@ -56,12 +58,21 @@ final class CardListViewController: BaseViewController {
     
     @objc private func editButtonPressed(sender: UIButton) {
         isEditingNow.toggle()
-        print(isEditingNow)////////////
+//        print(isEditingNow)////
     }
     
     @objc  func deleteButtonPressed(sender: UIButton) {
-//        snapshot.deleteItems([baseCards[sender.tag]])
-        printContent(baseCards)
+//        makeSnapShot(cards: baseCards)
+        var cards = baseCards
+        cards.append(plusCard)
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Card>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(cards, toSection: 0)
+        snapshot.deleteItems([cards[sender.tag]])
+        baseCards.remove(at: sender.tag)
+//        snapshot.reloadItems(baseCards)
+        dataSource.apply(snapshot)
+        print(sender.tag)
     }
     
 }
@@ -120,8 +131,12 @@ extension CardListViewController {
 extension CardListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == baseCards.count {
-//            print("item", indexPath.item)
+        if indexPath.item == baseCards.count { //새카드 아이템 누르면
+            transition(CardViewController(card: nil), transitionStyle: .presentOverFull)
+        } else {
+            transition(CardViewController(card: baseCards[indexPath.item]), transitionStyle: .presentOverFull)
+            
         }
+
     }
 }
