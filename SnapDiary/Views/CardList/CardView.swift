@@ -21,51 +21,41 @@ class CardView: BaseView {
        let view = UILabel()
         view.text = "일기를 위한 질문을 입력해주세요"
         view.textColor = .lightGray
-        view.backgroundColor = .blue
+//        view.backgroundColor = .blue
         return view
     }()
     
     let textView: UITextView = {
         let view = UITextView()
-//        view.backgroundColor = .clear
-        view.backgroundColor = .brown
+        view.backgroundColor = .clear
+//        view.backgroundColor = .brown
         view.textAlignment = .center
-//        view.centerVertically()
-        view.textContainerInset = UIEdgeInsets(top: 70, left: 20, bottom: 20, right: 20) 
+//        let contentSize = view.contentSize
+//        let topMargin = (view.bounds.height / 2) - (contentSize.height / 2)
+//        view.contentInset = UIEdgeInsets(top: topMargin, left: 0, bottom: 0, right: 0)
+
      
         return view
     }()
-    
-//    let dismissButton: UIButton = {
-//        let view = UIButton(type: .close)
-//        return view
-//    }()
-//    
-//    let saveButton: UIButton = {
-//        let view = UIButton()
-//        view.setTitle("저장", for: .normal)
-//        return view
-//    }()
+ 
     
     override func configure() {
         super.configure()
         [ centerView,placeHolder, textView, dismissButton, saveButton].forEach { addSubview($0)}
-//        [ centerView, textView, dismissButton, saveButton].forEach { addSubview($0)}
         backgroundColor = .clear
     }
     override func setConstraints() {
         super.setConstraints()
         centerView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(44)
-            make.center.equalToSuperview()
-            make.height.equalTo(centerView.snp.width).multipliedBy(1.5)
+            make.top.equalToSuperview().offset(60)
+            make.height.equalTo(centerView.snp.width).multipliedBy(1.7)
             //0.33:0.5
         }
         textView.snp.makeConstraints { make in
-            make.edges.equalTo(centerView.snp.edges)
-//            make.center.equalToSuperview()
-//            make.height.greaterThanOrEqualTo(44)
             make.horizontalEdges.equalTo(centerView.snp.horizontalEdges)
+            make.top.equalTo(saveButton.snp.bottom)
+            make.bottom.equalTo(centerView.snp.bottom)
         }
         dismissButton.snp.makeConstraints { make in
             make.top.equalTo(centerView.snp.top)
@@ -80,23 +70,4 @@ class CardView: BaseView {
         }
         
     }
-}
-
-extension UITextView {
-
-    func centerVerticalText() {
-        self.textAlignment = .center
-        let fitSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
-        let size = sizeThatFits(fitSize)
-        let calculate = (bounds.size.height - size.height * zoomScale) / 2
-        let offset = max(1, calculate)
-        contentOffset.y = -offset
-    }
-
-     func centerVertically()
-    {
-        let iFont = font == nil ? UIFont.systemFont(ofSize: UIFont.systemFontSize) : font!
-        textContainerInset.top = (frame.height - bounds.height) / 2
-    }
-    
 }

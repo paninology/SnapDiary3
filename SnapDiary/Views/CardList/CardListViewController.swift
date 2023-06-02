@@ -16,15 +16,10 @@ final class CardListViewController: BaseViewController {
     var isEditingNow = false {
         didSet {
             let title = isEditingNow ? "확인" : "편집"
-            var cards: [Card]
-            if isEditingNow {
-                cards = baseCards
-                cards.append(plusCard)
-                makeSnapShot(cards: cards)
-            } else {
-                makeSnapShot(cards: baseCards)
-            }
-//            makeSnapShot(cards: baseCards)
+//            var cards: [Card]
+//            cards = baseCards
+//            cards.append(plusCard)
+            makeSnapShot(cards: baseCards)
             mainView.editButton.setTitle(title, for: .normal)
         }
     }
@@ -52,6 +47,14 @@ final class CardListViewController: BaseViewController {
         mainView.collectionView.delegate = self
     }
     
+    private func newCardCellConfig(cell: CardCollectionViewCell) {
+        cell.deleteButton.isHidden = true
+        cell.questionLabel.layer.borderWidth = 2
+        cell.questionLabel.layer.borderColor = UIColor.systemGray.cgColor
+        cell.questionLabel.font = .boldSystemFont(ofSize: 16)
+//                cell.questionLabel.text = "새카드 추가하기"
+    }
+    
     @objc private func cancelButtonPressed(sender: UIButton) {
         dismiss(animated: true)
     }
@@ -61,7 +64,7 @@ final class CardListViewController: BaseViewController {
 //        print(isEditingNow)////
     }
     
-    @objc  func deleteButtonPressed(sender: UIButton) {
+    @objc private func deleteButtonPressed(sender: UIButton) {
 //        makeSnapShot(cards: baseCards)
         var cards = baseCards
         cards.append(plusCard)
@@ -95,9 +98,8 @@ extension CardListViewController {
             cell.deleteButton.tag = indexPath.item
             cell.deleteButton.isHidden = !self.isEditingNow
             cell.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
-            if indexPath.item == baseCards.count {
-                cell.deleteButton.isHidden = true
-//                cell.questionLabel.font = .systemFont(ofSize: 20)
+            if indexPath.item == baseCards.count { //새카드셀
+               newCardCellConfig(cell: cell)
             }
         }
         
@@ -121,6 +123,7 @@ extension CardListViewController {
         snapshot.appendItems(cards, toSection: 0)
 //        snapshot.deleteItems(<#T##identifiers: [Card]##[Card]#>)
         snapshot.reloadItems(cards)
+        snapshot.appendItems([plusCard])
         dataSource.apply(snapshot)
     }
     

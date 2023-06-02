@@ -9,8 +9,9 @@ import UIKit
 
 final class CardViewController: BaseViewController {
     
-    let mainView = CardView()
-    var card: Card?
+    private let mainView = CardView()
+    private var card: Card?
+    private var isKeyboardVisible = false 
 
 
     init(card: Card?) {
@@ -24,27 +25,68 @@ final class CardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+    }
+    
+    override func configure() {
+        super.configure()
         view = mainView
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         mainView.textView.delegate = self
         mainView.textView.text = card?.question ?? ""
         mainView.placeHolder.isHidden = !mainView.textView.text.isEmpty
         mainView.dismissButton.addTarget(self, action: #selector(dismissButtonPressed), for: .touchUpInside)
+        mainView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async { [weak self] in
+                self?.setTextViewContentInset()
+            }
+    }
+
+    private func setTextViewContentInset() {
+        let contentSize = mainView.textView.contentSize
+        let topMargin = (mainView.textView.bounds.height / 2) - (contentSize.height / 2) - mainView.saveButton.bounds.height/2
+        mainView.textView.contentInset = UIEdgeInsets(top: topMargin, left: 0, bottom: 0, right: 0)
+
     }
     
     @objc private func dismissButtonPressed() {
         dismiss(animated: true)
+    }
+    
+    @objc private func saveButtonPressed() {
+        dismiss(animated: true)
+    }
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        isKeyboardVisible = true
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let bottomInset = (keyboardSize.height / 2) 
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+            mainView.textView.contentInset = contentInsets
+            mainView.textView.scrollIndicatorInsets = contentInsets
+            
+        }
+    }
+    
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        isKeyboardVisible = false
+        setTextViewContentInset()
+       
     }
 }
 
 extension CardViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         mainView.placeHolder.isHidden = !textView.text.isEmpty
-        let contentSize = textView.contentSize
-        let topMargin = (textView.bounds.height / 2) - contentSize.height
-        mainView.textView.contentInset = UIEdgeInsets(top: topMargin, left: 20, bottom: 20, right: 20)
-//        mainView.textView.snp.updateConstraints { make in
-//            make.height.equalTo(contentSize.height)
-//        }
+        if !isKeyboardVisible {
+            
+            setTextViewContentInset()
+        }
     }
    
 }

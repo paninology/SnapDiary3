@@ -27,8 +27,14 @@ final class AddBookViewController: BaseViewController {
         view = mainView
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        mainView.tableView.addGestureRecognizer(tapGesture)
         
     }
+    @objc func hideKeyboard() {
+            view.endEditing(true) // 다른 곳 탭 시 키보드 내리기
+        }
+    
     @objc private func selectSwitchChanged(sender: UISwitch) {
         isNotiOn = sender.isOn
         mainView.tableView.reloadData()
@@ -129,6 +135,10 @@ extension AddBookViewController: UITextFieldDelegate {
         
         // 글자 수가 최대 길이를 초과하면 입력을 막음
         return newText.count <= maxLength
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // 키보드 내리기
+        return true
     }
 
 }
