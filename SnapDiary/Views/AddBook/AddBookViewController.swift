@@ -6,17 +6,23 @@
 //
 
 import UIKit
+import RealmSwift
 //새일기장: 제목, 알림옵션, 질문덱선택(설정), 사진
 //추천 일기옵션 제공
+//mvvm으로 변경??
 final class AddBookViewController: BaseViewController {
     
-    let mainView = AddBookView()
-    let inputFields = ["제목", "설명", "알림옵션", "질문카드 고르기"]
-    let dateOptions = ["매일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "매월 1일", "매월 15일"]
-    let decks = ["내일기덱", "육아일기덱", "test1", "test2" ]
-    var selectedOption: String?
-    var selectedDeck: String?
-    var isNotiOn = true
+    private let mainView = AddBookView()
+    private let inputFields = ["제목", "설명", "알림옵션", "질문카드 고르기"]
+    private let dateOptions = ["매일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "매월 1일", "매월 15일"]
+    private let decks = ["내일기덱", "육아일기덱", "test1", "test2" ]
+    
+    private var selectedOption: String?
+    private var selectedDeck: String?
+    private var isNotiOn = true
+    private var titleText = ""
+    private var subTitleText = ""
+    private var notificationDate: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,8 @@ final class AddBookViewController: BaseViewController {
         view = mainView
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonPressed))
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         mainView.tableView.addGestureRecognizer(tapGesture)
         
@@ -35,6 +43,10 @@ final class AddBookViewController: BaseViewController {
             view.endEditing(true) // 다른 곳 탭 시 키보드 내리기
         }
     
+    @objc private func saveButtonPressed(sender: UIButton) {
+        let book = Book(title: titleText, deckID: ObjectId(), subtitle: subTitleText)
+//        repository.addItem(items: book)
+    }
     @objc private func selectSwitchChanged(sender: UISwitch) {
         isNotiOn = sender.isOn
         mainView.tableView.reloadData()
@@ -43,8 +55,9 @@ final class AddBookViewController: BaseViewController {
     @objc private func cardDetailButtonPressed(sender: UIButton) {
         transition(CardListViewController(), transitionStyle: .presentOverFull)
     }
-
-    
+    @objc private func dateChanged(sender: UIDatePicker) {
+        notificationDate = sender.date
+    }
 }
 
 extension AddBookViewController: UITableViewDelegate, UITableViewDataSource {
@@ -84,6 +97,7 @@ extension AddBookViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.optionPicker.delegate = self
                 cell.optionPicker.dataSource = self
                 cell.optionPicker.tag = 0
+                cell.datepicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
                 return cell
             }
         } else {
@@ -132,9 +146,15 @@ extension AddBookViewController: UITextFieldDelegate {
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         let maxLength = 20 // 최대 글자 수 제한
-        
         // 글자 수가 최대 길이를 초과하면 입력을 막음
         return newText.count <= maxLength
+    }
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField.tag == 0 {
+            titleText = textField.text ?? ""
+        } else {
+            
+        }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // 키보드 내리기
@@ -142,7 +162,8 @@ extension AddBookViewController: UITextFieldDelegate {
     }
 
 }
-
+    
+    // MARK: - UIPickerViewDelegate
 extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -156,8 +177,6 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return decks.count
         }
     }
-    
-    // MARK: - UIPickerViewDelegate
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 0 {
@@ -174,6 +193,7 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             selectedDeck = decks[row] // 선택한 옵션 저장
         }
     }
-    
-    
+
 }
+
+

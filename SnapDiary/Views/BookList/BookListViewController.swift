@@ -10,7 +10,7 @@ import RealmSwift
 
 final class BookListViewController: BaseViewController {
     
-    var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, Book>!
+    
     var dataSource: UICollectionViewDiffableDataSource<Int, Book>!
     let mainView = BookListView()
     
@@ -41,30 +41,26 @@ final class BookListViewController: BaseViewController {
 //MARK: CollectionView datasource
 extension BookListViewController {
     private func configureDataSource() {
-         cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Book>.init { cell, indexPath, itemIdentifier in
-            
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Book>.init { cell, indexPath, itemIdentifier in
             var content = cell.defaultContentConfiguration()
-             content.text = itemIdentifier.title
-             content.secondaryText = itemIdentifier.subtitle
-             content.image = UIImage(systemName: "person")
+            content.text = itemIdentifier.title
+            content.secondaryText = itemIdentifier.subtitle
+            content.image = UIImage(systemName: "person")
             content.prefersSideBySideTextAndSecondaryText = false
             content.textToSecondaryTextVerticalPadding = 20
-             
             cell.contentConfiguration = content
-            
             var backgroundConfig = UIBackgroundConfiguration.listPlainCell()
-             backgroundConfig.backgroundColor = .systemGroupedBackground
+            backgroundConfig.backgroundColor = .systemGroupedBackground
             backgroundConfig.cornerRadius = 10
             backgroundConfig.strokeWidth = 1
-//            backgroundConfig.strokeColor = .label
-             backgroundConfig.backgroundInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
+            //            backgroundConfig.strokeColor = .label
+            backgroundConfig.backgroundInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
             cell.backgroundConfiguration = backgroundConfig
         }
-        
-        //collectionView.dataSource = self
+
         //numberOfItemsInSection, cellForItemAt
         dataSource = UICollectionViewDiffableDataSource(collectionView: mainView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration, for: indexPath, item: itemIdentifier)
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
 
             return cell
             
@@ -74,10 +70,8 @@ extension BookListViewController {
     
     private func makeSnapShot(books: [Book]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Book>()
-
         snapshot.appendSections([0])
         snapshot.appendItems(books, toSection: 0)
-
         dataSource.apply(snapshot)
     }
 }

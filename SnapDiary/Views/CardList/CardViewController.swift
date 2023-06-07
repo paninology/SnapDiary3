@@ -6,12 +6,20 @@
 //
 
 import UIKit
+import RealmSwift
+import Toast
 
 final class CardViewController: BaseViewController {
     
     private let mainView = CardView()
     private var card: Card?
-    private var isKeyboardVisible = false 
+    private var isKeyboardVisible = false
+    private var isTextEmpty = true {
+        didSet {
+            mainView.placeHolder.isHidden = !isTextEmpty
+            setSaveButton()
+        }
+    }
 
 
     init(card: Card?) {
@@ -25,12 +33,15 @@ final class CardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        repository.showRealmDB()
+        
  
     }
     
     override func configure() {
         super.configure()
         view = mainView
+        isTextEmpty = mainView.textView.text.isEmpty
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         mainView.textView.delegate = self
@@ -38,6 +49,7 @@ final class CardViewController: BaseViewController {
         mainView.placeHolder.isHidden = !mainView.textView.text.isEmpty
         mainView.dismissButton.addTarget(self, action: #selector(dismissButtonPressed), for: .touchUpInside)
         mainView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        setSaveButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,12 +66,37 @@ final class CardViewController: BaseViewController {
 
     }
     
+    private func setSaveButton() {
+        if isTextEmpty {
+            mainView.saveButton.isEnabled = false
+            mainView.saveButton.setTitleColor(.gray, for: .normal)
+        } else {
+            mainView.saveButton.isEnabled = true
+            mainView.saveButton.setTitleColor(.systemBlue, for: .normal)
+        }
+    }
+    
     @objc private func dismissButtonPressed() {
         dismiss(animated: true)
     }
     
     @objc private func saveButtonPressed() {
+        guard mainView.textView.text != nil else {
+            mainView.makeToast("내용을 입력해주세요")
+            
+            return}
+      
+        if card != nil { //수정
+//            repository.updateItem(item: Card, update: "question", value: mainView.textView.text)
+            repository.localRealm.create(Card.self, value: ["question": mainView.textView.text], update: .modified)
+        } else { //신규
+            let newCard = Card(question: mainView.textView.text)
+            repository.addItem(items: newCard)
+        }
         dismiss(animated: true)
+        if let mainViewController = presentingViewController as? CardListViewController {
+            mainViewController.viewWillAppear(true)
+        }
     }
     @objc private func keyboardWillShow(notification: NSNotification) {
         isKeyboardVisible = true
@@ -72,7 +109,6 @@ final class CardViewController: BaseViewController {
         }
     }
     
-    
     @objc private func keyboardWillHide(notification: NSNotification) {
         isKeyboardVisible = false
         setTextViewContentInset()
@@ -82,11 +118,11 @@ final class CardViewController: BaseViewController {
 
 extension CardViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        mainView.placeHolder.isHidden = !textView.text.isEmpty
+        isTextEmpty = textView.text.isEmpty
         if !isKeyboardVisible {
-            
             setTextViewContentInset()
         }
+        
     }
    
 }
