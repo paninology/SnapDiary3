@@ -15,10 +15,18 @@ final class AddBookViewController: BaseViewController {
     private let mainView = AddBookView()
     private let inputFields = ["제목", "설명", "알림옵션", "질문카드 고르기"]
     private let dateOptions = ["매일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "매월 1일", "매월 15일"]
-    private let decks = ["내일기덱", "육아일기덱", "test1", "test2" ]
-    
+    private var decks: [Deck] = []
+    private var fetchedDecks: Results<Deck>? {
+        didSet {
+            if let result = fetchedDecks {
+                decks = Array(result)
+            } else {
+                decks = []
+            }
+        }
+    }
     private var selectedOption: String?
-    private var selectedDeck: String?
+    private var selectedDeck: Deck?
     private var isNotiOn = true
     private var titleText = ""
     private var subTitleText = ""
@@ -26,6 +34,7 @@ final class AddBookViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchedDecks = repository.fetch(model: Deck.self)
     }
     
     override func configure() {
@@ -53,7 +62,7 @@ final class AddBookViewController: BaseViewController {
     }
     
     @objc private func cardDetailButtonPressed(sender: UIButton) {
-        transition(CardListViewController(), transitionStyle: .presentOverFull)
+        transition(DeckDetailViewController(deck: nil), transitionStyle: .presentOverFull)
     }
     @objc private func dateChanged(sender: UIDatePicker) {
         notificationDate = sender.date
@@ -174,7 +183,7 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 0 {
             return dateOptions.count // 피커뷰의 항목 개수
         } else {
-            return decks.count
+            return decks.count + 1
         }
     }
     
@@ -182,7 +191,11 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 0 {
             return dateOptions[row] // 각 피커뷰 항목의 제목
         } else {
-            return decks[row]
+            if row < decks.count {
+                return decks[row].title
+            } else {
+                return "새로운 덱"
+            }
         }
     }
     

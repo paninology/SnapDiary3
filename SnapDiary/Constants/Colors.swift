@@ -11,6 +11,6 @@ extension Constants {
     
     enum Color {
         static let background = UIColor.systemBackground
-        
+        static let buttonText = UIColor.label
     }
 }

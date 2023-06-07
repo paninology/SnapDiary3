@@ -34,7 +34,6 @@ final class CardViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         repository.showRealmDB()
-        
  
     }
     
@@ -94,7 +93,7 @@ final class CardViewController: BaseViewController {
             repository.addItem(items: newCard)
         }
         dismiss(animated: true)
-        if let mainViewController = presentingViewController as? CardListViewController {
+        if let mainViewController = presentingViewController as? DeckDetailViewController {
             mainViewController.viewWillAppear(true)
         }
     }

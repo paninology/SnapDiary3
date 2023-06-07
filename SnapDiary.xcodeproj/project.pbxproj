@@ -11,6 +11,9 @@
 		8F77D8712A26E8C100BC0054 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F77D8702A26E8C100BC0054 /* CardViewController.swift */; };
 		8FB825C12A29A77F00C59ED8 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */; };
 		8FBEDF122A2D7C3D0030E41C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 8FBEDF112A2D7C3D0030E41C /* Toast */; };
+		8FBEDF152A3057130030E41C /* DeckTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */; };
+		8FBEDF182A305AF10030E41C /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF172A305AF10030E41C /* CustomButtons.swift */; };
+		8FBEDF1A2A31AF740030E41C /* CardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF192A31AF740030E41C /* CardListViewController.swift */; };
 		8FDBC41F2A14AC7700E9B619 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC41E2A14AC7700E9B619 /* AppDelegate.swift */; };
 		8FDBC4212A14AC7700E9B619 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4202A14AC7700E9B619 /* SceneDelegate.swift */; };
 		8FDBC4232A14AC7700E9B619 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4222A14AC7700E9B619 /* ViewController.swift */; };
@@ -41,7 +44,7 @@
 		8FDBC4802A1F2D7500E9B619 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC47F2A1F2D7500E9B619 /* SwitchTableViewCell.swift */; };
 		8FDBC4822A20742500E9B619 /* DeckPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4812A20742500E9B619 /* DeckPickerCell.swift */; };
 		8FDBC4852A2080D600E9B619 /* DeckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4842A2080D600E9B619 /* DeckListViewController.swift */; };
-		8FDBC4872A2080E400E9B619 /* CardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4862A2080E400E9B619 /* CardListViewController.swift */; };
+		8FDBC4872A2080E400E9B619 /* DeckDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4862A2080E400E9B619 /* DeckDetailViewController.swift */; };
 		8FDBC4892A2084A900E9B619 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4882A2084A900E9B619 /* CardListView.swift */; };
 		8FDBC48B2A208AF100E9B619 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC48A2A208AF100E9B619 /* CardCollectionViewCell.swift */; };
 		8FDBC48E2A24469000E9B619 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC48D2A24469000E9B619 /* Constants.swift */; };
@@ -69,6 +72,9 @@
 		8F77D86E2A26E8B900BC0054 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8F77D8702A26E8C100BC0054 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckTitleViewController.swift; sourceTree = "<group>"; };
+		8FBEDF172A305AF10030E41C /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
+		8FBEDF192A31AF740030E41C /* CardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewController.swift; sourceTree = "<group>"; };
 		8FDBC41B2A14AC7700E9B619 /* SnapDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FDBC41E2A14AC7700E9B619 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FDBC4202A14AC7700E9B619 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,7 +107,7 @@
 		8FDBC47F2A1F2D7500E9B619 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		8FDBC4812A20742500E9B619 /* DeckPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckPickerCell.swift; sourceTree = "<group>"; };
 		8FDBC4842A2080D600E9B619 /* DeckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListViewController.swift; sourceTree = "<group>"; };
-		8FDBC4862A2080E400E9B619 /* CardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewController.swift; sourceTree = "<group>"; };
+		8FDBC4862A2080E400E9B619 /* DeckDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckDetailViewController.swift; sourceTree = "<group>"; };
 		8FDBC4882A2084A900E9B619 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		8FDBC48A2A208AF100E9B619 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		8FDBC48D2A24469000E9B619 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -140,11 +146,8 @@
 		8F77D8722A26E8D000BC0054 /* CardList */ = {
 			isa = PBXGroup;
 			children = (
-				8FDBC48A2A208AF100E9B619 /* CardCollectionViewCell.swift */,
 				8FDBC4882A2084A900E9B619 /* CardListView.swift */,
-				8FDBC4862A2080E400E9B619 /* CardListViewController.swift */,
-				8F77D86E2A26E8B900BC0054 /* CardView.swift */,
-				8F77D8702A26E8C100BC0054 /* CardViewController.swift */,
+				8FBEDF192A31AF740030E41C /* CardListViewController.swift */,
 			);
 			path = CardList;
 			sourceTree = "<group>";
@@ -155,6 +158,24 @@
 				8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		8FBEDF132A3056DF0030E41C /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				8FDBC48A2A208AF100E9B619 /* CardCollectionViewCell.swift */,
+				8F77D86E2A26E8B900BC0054 /* CardView.swift */,
+				8F77D8702A26E8C100BC0054 /* CardViewController.swift */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+		8FBEDF162A305AD90030E41C /* CustomButtons */ = {
+			isa = PBXGroup;
+			children = (
+				8FBEDF172A305AF10030E41C /* CustomButtons.swift */,
+			);
+			path = CustomButtons;
 			sourceTree = "<group>";
 		};
 		8FDBC4122A14AC7700E9B619 = {
@@ -218,6 +239,7 @@
 		8FDBC4512A1700B200E9B619 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				8FBEDF162A305AD90030E41C /* CustomButtons */,
 				8FDBC4762A1DCE3A00E9B619 /* CustomCells */,
 				8FDBC44F2A16FDC200E9B619 /* BaseViewController.swift */,
 				8FDBC4612A1B3F8900E9B619 /* BaseView.swift */,
@@ -228,6 +250,7 @@
 		8FDBC4542A17044600E9B619 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8FBEDF132A3056DF0030E41C /* Card */,
 				8F77D8722A26E8D000BC0054 /* CardList */,
 				8FDBC4832A2080BE00E9B619 /* DeckList */,
 				8FDBC4672A1D993100E9B619 /* BookList */,
@@ -306,6 +329,8 @@
 			isa = PBXGroup;
 			children = (
 				8FDBC4842A2080D600E9B619 /* DeckListViewController.swift */,
+				8FDBC4862A2080E400E9B619 /* DeckDetailViewController.swift */,
+				8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */,
 			);
 			path = DeckList;
 			sourceTree = "<group>";
@@ -465,13 +490,15 @@
 				8F77D86F2A26E8B900BC0054 /* CardView.swift in Sources */,
 				8FDBC45E2A174DBE00E9B619 /* Deck.swift in Sources */,
 				8FDBC4852A2080D600E9B619 /* DeckListViewController.swift in Sources */,
+				8FBEDF152A3057130030E41C /* DeckTitleViewController.swift in Sources */,
 				8FDBC4232A14AC7700E9B619 /* ViewController.swift in Sources */,
 				8FDBC4752A1DCE1C00E9B619 /* TextFeildTableViewCell.swift in Sources */,
 				8FDBC4502A16FDC200E9B619 /* BaseViewController.swift in Sources */,
 				8FDBC4822A20742500E9B619 /* DeckPickerCell.swift in Sources */,
 				8F77D8712A26E8C100BC0054 /* CardViewController.swift in Sources */,
-				8FDBC4872A2080E400E9B619 /* CardListViewController.swift in Sources */,
+				8FDBC4872A2080E400E9B619 /* DeckDetailViewController.swift in Sources */,
 				8FDBC45C2A17136C00E9B619 /* Book.swift in Sources */,
+				8FBEDF1A2A31AF740030E41C /* CardListViewController.swift in Sources */,
 				8FDBC4802A1F2D7500E9B619 /* SwitchTableViewCell.swift in Sources */,
 				8FDBC4712A1DAC1600E9B619 /* Card.swift in Sources */,
 				8FDBC4792A1DCFED00E9B619 /* VC+Transition.swift in Sources */,
@@ -482,6 +509,7 @@
 				8FDBC4622A1B3F8900E9B619 /* BaseView.swift in Sources */,
 				8FDBC48B2A208AF100E9B619 /* CardCollectionViewCell.swift in Sources */,
 				8FDBC48E2A24469000E9B619 /* Constants.swift in Sources */,
+				8FBEDF182A305AF10030E41C /* CustomButtons.swift in Sources */,
 				8FDBC4732A1DCAE900E9B619 /* AddBookViewController.swift in Sources */,
 				8FDBC46F2A1DAB1000E9B619 /* AddBookView.swift in Sources */,
 				8FDBC4532A17043A00E9B619 /* BookListViewController.swift in Sources */,

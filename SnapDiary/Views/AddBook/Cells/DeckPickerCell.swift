@@ -18,7 +18,7 @@ final class DeckPickerCell: UITableViewCell {
     
     let detailButton: UIButton = {
        let view = UIButton()
-        view.setTitle("상세보기", for: .normal)
+        view.setTitle("덱 편집", for: .normal)
         view.setTitleColor(.label, for: .normal)
         
         return view

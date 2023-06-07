@@ -2,14 +2,14 @@
 //  CardListViewController.swift
 //  SnapDiary
 //
-//  Created by yongseok lee on 2023/06/08.
+//  Created by yongseok lee on 2023/05/26.
 //
 
 import UIKit
 //import RealmSwift
 
 //delete logic 수정필요.
-final class CardListViewController: BaseViewController {
+final class DeckDetailViewController: BaseViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Int, Card>!
     private let mainView = CardListView()
@@ -70,8 +70,12 @@ final class CardListViewController: BaseViewController {
     }
     
     private func fetchCards() {
-        let result = self.repository.fetch(model: Card.self)
-        self.deckCards = Array(result)
+        if let deck = deck { //기존 덱일때
+            deckCards = Array(deck.cards)
+            
+        } else { //새로운 덱일때
+//            deckCards = []
+        }
         
     }
     
@@ -85,15 +89,15 @@ final class CardListViewController: BaseViewController {
     }
     
     @objc private func deleteButtonPressed(sender: UIButton) {
-        print(sender.tag)
-        print("deledted:", deckCards[sender.tag])
-        var snapshot = dataSource.snapshot()
-        snapshot.deleteItems([deckCards[sender.tag]])
-        dataSource.apply(snapshot)
-        repository.deleteItem(item: self.deckCards[sender.tag])
-        let result = self.repository.fetch(model: Card.self)
-        print("result:",result)
-        
+
+//        print("deledted:", deckCards[sender.tag])
+//        var snapshot = dataSource.snapshot()
+//        snapshot.deleteItems([deckCards[sender.tag]])
+//        dataSource.apply(snapshot)
+//        repository.deleteItem(item: self.deckCards[sender.tag])
+//        let result = self.repository.fetch(model: Card.self)
+//        print("result:",result)
+//        
         print(sender.tag)
     }
     private func makeSnapShot() {
@@ -112,7 +116,7 @@ final class CardListViewController: BaseViewController {
 }
 
 //MARK: CollectionView datasource
-extension CardListViewController {
+extension DeckDetailViewController {
     private func configureDataSource() {
         let headerRegistration = UICollectionView.SupplementaryRegistration
         <TitleSupplementaryView>(elementKind: "section-header-element-kind") { [weak self]
@@ -148,7 +152,7 @@ extension CardListViewController {
 }
 
 
-extension CardListViewController: UICollectionViewDelegate {
+extension DeckDetailViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == deckCards.count { //새카드 아이템 누르면
