@@ -12,7 +12,7 @@ final class BookListViewController: BaseViewController {
     
     
     var dataSource: UICollectionViewDiffableDataSource<Int, Book>!
-    let mainView = BookListView()
+    let mainView = ListView()
     
     var bookList: [Book] = [
         Book(title: "내일기", deckID: ObjectId(), subtitle: "나의 생활에 관한 일기이다."),
@@ -24,6 +24,7 @@ final class BookListViewController: BaseViewController {
         view = mainView
         configureDataSource()
         makeSnapShot(books: bookList)
+        print(repository.localRealm.configuration.fileURL)
     }
     
     override func configure() {

@@ -20,6 +20,7 @@ final class AddBookViewController: BaseViewController {
         didSet {
             if let result = fetchedDecks {
                 decks = Array(result)
+                print("fetched", decks)
             } else {
                 decks = []
             }
@@ -34,8 +35,17 @@ final class AddBookViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchedDecks = repository.fetch(model: Deck.self)
+        
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchedDecks = repository.fetch(model: Deck.self)
+        mainView.tableView.reloadRows(at: [IndexPath(row: 0, section: 3)], with: .automatic)
+//        mainView.tableView.cellForRow(at: IndexPath(row: 0, section: 3)).
+     
+        print("addViewwill")
+    }
+
     
     override func configure() {
         super.configure()
@@ -46,13 +56,27 @@ final class AddBookViewController: BaseViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         mainView.tableView.addGestureRecognizer(tapGesture)
+//        selectedDeck = decks[0]
+        print("selecttttttt", selectedDeck)
         
     }
+    private func newDeckName()-> String {
+        var newTitle = "내카드덱(1)"
+        var count = 2
+
+        while decks.contains(where: { $0.title == newTitle }) {
+            newTitle = "내카드덱(\(count))"
+            count += 1
+        }
+        return newTitle
+    }
+    
     @objc func hideKeyboard() {
             view.endEditing(true) // 다른 곳 탭 시 키보드 내리기
         }
     
     @objc private func saveButtonPressed(sender: UIButton) {
+      
         let book = Book(title: titleText, deckID: ObjectId(), subtitle: subTitleText)
 //        repository.addItem(items: book)
     }
@@ -62,7 +86,13 @@ final class AddBookViewController: BaseViewController {
     }
     
     @objc private func cardDetailButtonPressed(sender: UIButton) {
-        transition(DeckDetailViewController(deck: nil), transitionStyle: .presentOverFull)
+        if let select = selectedDeck {
+            transition(DeckDetailViewController(deck: select), transitionStyle: .presentOverFull)
+        } else {
+            let newDeck = Deck(title: newDeckName(), questions: List<Card>())
+            repository.addItem(items: newDeck)
+            transition(DeckDetailViewController(deck: newDeck), transitionStyle: .presentOverFull)
+        }
     }
     @objc private func dateChanged(sender: UIDatePicker) {
         notificationDate = sender.date
@@ -115,6 +145,10 @@ extension AddBookViewController: UITableViewDelegate, UITableViewDataSource {
             cell.deckPicker.dataSource = self
             cell.deckPicker.tag = 1
             cell.detailButton.addTarget(self, action: #selector(cardDetailButtonPressed), for: .touchUpInside)
+            if let deckForCell = selectedDeck {
+                let picked = decks.firstIndex(of: deckForCell) ?? 0
+                cell.deckPicker.selectRow(picked, inComponent: 0, animated: true)
+            }
             return cell
         }
 
@@ -203,9 +237,15 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView.tag == 0 {
             selectedOption = dateOptions[row] // 선택한 옵션 저장
         } else {
-            selectedDeck = decks[row] // 선택한 옵션 저장
+            if row < decks.count {
+                selectedDeck = decks[row] // 선택한 옵션 저장
+                print("selected:", selectedDeck)
+            }else {
+                selectedDeck = nil
+            }
         }
     }
+   
 
 }
 

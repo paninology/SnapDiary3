@@ -13,7 +13,8 @@ final class DeckDetailViewController: BaseViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Int, Card>!
     private let mainView = CardListView()
-    var deck: Deck?
+    var deck: Deck
+    
     
     private var isEditingNow = false {
         didSet {
@@ -30,9 +31,9 @@ final class DeckDetailViewController: BaseViewController {
         }
     }
     
-    private let plusCard = Card(question: "새카드 추가")
+    private let plusCard = Card(question: "카드 불러오기")
     
-    init(deck: Deck?) {
+    init(deck: Deck) {
         self.deck = deck
         super.init(nibName: nil, bundle: nil)
     }
@@ -70,17 +71,19 @@ final class DeckDetailViewController: BaseViewController {
     }
     
     private func fetchCards() {
-        if let deck = deck { //기존 덱일때
-            deckCards = Array(deck.cards)
-            
-        } else { //새로운 덱일때
-//            deckCards = []
-        }
-        
+        deckCards = Array(deck.cards)
     }
     
     @objc private func cancelButtonPressed(sender: UIButton) {
-        dismiss(animated: true)
+        print("cancelbutton")
+//        refreshRootViewWillAppear(type: AddBookViewController.self)
+        if let navigationController = presentingViewController as? UINavigationController,
+              let addBookVC = navigationController.topViewController as? AddBookViewController {
+               dismiss(animated: true) {
+                   addBookVC.viewWillAppear(true)
+               }
+           }
+       
     }
     
     @objc private func editButtonPressed(sender: UIButton) {
@@ -122,7 +125,7 @@ extension DeckDetailViewController {
         <TitleSupplementaryView>(elementKind: "section-header-element-kind") { [weak self]
                    (supplementaryView, string, indexPath) in
             guard let self = self else {return}
-            supplementaryView.label.text = deck?.title ?? "새로운 덱"
+            supplementaryView.label.text = deck.title 
                }
         
         let cellRegistration = UICollectionView.CellRegistration<CardCollectionViewCell, Card>.init { [weak self] cell, indexPath, itemIdentifier in
@@ -156,7 +159,7 @@ extension DeckDetailViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == deckCards.count { //새카드 아이템 누르면
-            transition(CardViewController(card: nil), transitionStyle: .presentOverFull)
+            transition(CardPickerViewContoller(deck: deck), transitionStyle: .presentOverFull)
         } else {
             transition(CardViewController(card: deckCards[indexPath.item]), transitionStyle: .presentOverFull)
             

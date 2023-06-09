@@ -55,7 +55,7 @@ final class CardListViewController: BaseViewController {
     
     override func configure() {
         super.configure()
-        mainView.dismissButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+        mainView.dismissButton.addTarget(self, action: #selector(dismissButtonPressed), for: .touchUpInside)
         mainView.editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
         mainView.collectionView.delegate = self
         mainView.editDeckTitleButton.isHidden = !isEditingNow
@@ -74,10 +74,7 @@ final class CardListViewController: BaseViewController {
         self.deckCards = Array(result)
         
     }
-    
-    @objc private func cancelButtonPressed(sender: UIButton) {
-        dismiss(animated: true)
-    }
+
     
     @objc private func editButtonPressed(sender: UIButton) {
         isEditingNow.toggle()

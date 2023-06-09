@@ -37,4 +37,14 @@ class BaseViewController: UIViewController {
         }
         present(alert, animated: true, completion: nil)
     }
+    
+    func refreshRootViewWillAppear<T: UIViewController>(type: T.Type) {
+        if let vc = presentingViewController as? T {
+            vc.viewWillAppear(true)
+        }
+    }
+    
+    @objc func dismissButtonPressed() {
+        dismiss(animated: true)
+    }
 }

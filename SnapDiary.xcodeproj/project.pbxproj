@@ -14,6 +14,9 @@
 		8FBEDF152A3057130030E41C /* DeckTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */; };
 		8FBEDF182A305AF10030E41C /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF172A305AF10030E41C /* CustomButtons.swift */; };
 		8FBEDF1A2A31AF740030E41C /* CardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF192A31AF740030E41C /* CardListViewController.swift */; };
+		8FBEDF1C2A3203060030E41C /* CardPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF1B2A3203060030E41C /* CardPickerViewController.swift */; };
+		8FBEDF1E2A3203650030E41C /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF1D2A3203650030E41C /* ListView.swift */; };
+		8FBEDF202A3207CE0030E41C /* CardPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF1F2A3207CE0030E41C /* CardPickerView.swift */; };
 		8FDBC41F2A14AC7700E9B619 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC41E2A14AC7700E9B619 /* AppDelegate.swift */; };
 		8FDBC4212A14AC7700E9B619 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4202A14AC7700E9B619 /* SceneDelegate.swift */; };
 		8FDBC4232A14AC7700E9B619 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDBC4222A14AC7700E9B619 /* ViewController.swift */; };
@@ -75,6 +78,9 @@
 		8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckTitleViewController.swift; sourceTree = "<group>"; };
 		8FBEDF172A305AF10030E41C /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		8FBEDF192A31AF740030E41C /* CardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewController.swift; sourceTree = "<group>"; };
+		8FBEDF1B2A3203060030E41C /* CardPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPickerViewController.swift; sourceTree = "<group>"; };
+		8FBEDF1D2A3203650030E41C /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		8FBEDF1F2A3207CE0030E41C /* CardPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPickerView.swift; sourceTree = "<group>"; };
 		8FDBC41B2A14AC7700E9B619 /* SnapDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FDBC41E2A14AC7700E9B619 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FDBC4202A14AC7700E9B619 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -243,6 +249,7 @@
 				8FDBC4762A1DCE3A00E9B619 /* CustomCells */,
 				8FDBC44F2A16FDC200E9B619 /* BaseViewController.swift */,
 				8FDBC4612A1B3F8900E9B619 /* BaseView.swift */,
+				8FBEDF1D2A3203650030E41C /* ListView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -331,6 +338,8 @@
 				8FDBC4842A2080D600E9B619 /* DeckListViewController.swift */,
 				8FDBC4862A2080E400E9B619 /* DeckDetailViewController.swift */,
 				8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */,
+				8FBEDF1B2A3203060030E41C /* CardPickerViewController.swift */,
+				8FBEDF1F2A3207CE0030E41C /* CardPickerView.swift */,
 			);
 			path = DeckList;
 			sourceTree = "<group>";
@@ -500,12 +509,14 @@
 				8FDBC45C2A17136C00E9B619 /* Book.swift in Sources */,
 				8FBEDF1A2A31AF740030E41C /* CardListViewController.swift in Sources */,
 				8FDBC4802A1F2D7500E9B619 /* SwitchTableViewCell.swift in Sources */,
+				8FBEDF202A3207CE0030E41C /* CardPickerView.swift in Sources */,
 				8FDBC4712A1DAC1600E9B619 /* Card.swift in Sources */,
 				8FDBC4792A1DCFED00E9B619 /* VC+Transition.swift in Sources */,
 				8FB825C12A29A77F00C59ED8 /* RealmRepository.swift in Sources */,
 				8FDBC41F2A14AC7700E9B619 /* AppDelegate.swift in Sources */,
 				8FDBC46C2A1D9D3B00E9B619 /* WriteView.swift in Sources */,
 				8FDBC4212A14AC7700E9B619 /* SceneDelegate.swift in Sources */,
+				8FBEDF1E2A3203650030E41C /* ListView.swift in Sources */,
 				8FDBC4622A1B3F8900E9B619 /* BaseView.swift in Sources */,
 				8FDBC48B2A208AF100E9B619 /* CardCollectionViewCell.swift in Sources */,
 				8FDBC48E2A24469000E9B619 /* Constants.swift in Sources */,
@@ -515,6 +526,7 @@
 				8FDBC4532A17043A00E9B619 /* BookListViewController.swift in Sources */,
 				8FDBC4902A2446E500E9B619 /* Colors.swift in Sources */,
 				8FDBC4692A1D9D1300E9B619 /* WriteViewController.swift in Sources */,
+				8FBEDF1C2A3203060030E41C /* CardPickerViewController.swift in Sources */,
 				8FDBC47B2A1DE2F700E9B619 /* NotificationSettingViewController.swift in Sources */,
 				8FDBC4602A1B3DEA00E9B619 /* BookListView.swift in Sources */,
 				8FDBC47D2A1EFBAF00E9B619 /* NotificationOptionCell.swift in Sources */,

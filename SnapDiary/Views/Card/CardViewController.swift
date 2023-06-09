@@ -74,10 +74,7 @@ final class CardViewController: BaseViewController {
             mainView.saveButton.setTitleColor(.systemBlue, for: .normal)
         }
     }
-    
-    @objc private func dismissButtonPressed() {
-        dismiss(animated: true)
-    }
+
     
     @objc private func saveButtonPressed() {
         guard mainView.textView.text != nil else {

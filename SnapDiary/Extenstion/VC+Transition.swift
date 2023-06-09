@@ -38,7 +38,7 @@ extension UIViewController {
             self.present(viewController, animated: true)
         case .toHomeTab:
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//            let sceneDelegate = windowScene?.delegate as? SceneDelegate
 //            let vc = TabBarController()
 //            sceneDelegate?.window?.rootViewController = vc
 //            sceneDelegate?.window?.makeKeyAndVisible()

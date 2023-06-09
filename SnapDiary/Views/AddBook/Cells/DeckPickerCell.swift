@@ -18,9 +18,13 @@ final class DeckPickerCell: UITableViewCell {
     
     let detailButton: UIButton = {
        let view = UIButton()
-        view.setTitle("덱 편집", for: .normal)
+        view.setTitle(" 덱 편집 ", for: .normal)
         view.setTitleColor(.label, for: .normal)
-        
+        view.layer.cornerRadius = 8
+        view.clipsToBounds = true
+        view.backgroundColor = .systemGray4
+//        view.layer.borderWidth = 0.5
+//        view.layer.borderColor = UIColor.label.cgColor
         return view
     }()
 
@@ -29,7 +33,8 @@ final class DeckPickerCell: UITableViewCell {
         contentView.subviews.forEach { $0.removeFromSuperview() }
         [detailButton, deckPicker].forEach {addSubview($0)}
         detailButton.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview()
+//            make.verticalEdges.equalToSuperview()
+            make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(12)
         }
         deckPicker.snp.makeConstraints { make in

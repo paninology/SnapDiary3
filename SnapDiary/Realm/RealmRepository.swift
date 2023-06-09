@@ -13,7 +13,7 @@ protocol RealmRepositoryType {
     func addItem<T: Object>(items: T)
 //    func updateItem<T: Object>(item: T)
     func deleteItem<T: Object>(item: T)
-    func modifyItems(items: Any)
+//    func modifyItems(items: Any)
 }
 
 final class RealmRepository: RealmRepositoryType {
@@ -67,9 +67,18 @@ final class RealmRepository: RealmRepositoryType {
             localRealm.delete(item)
         }
     }
+    func appendCardToDeck(cards: [Card], deck: Deck) {
+        do {
+            try localRealm.write {
+                deck.cards.append(objectsIn: cards)
+            }
+        } catch let error {
+            print(error)
+        }
+    }
     
-    func modifyItems( items: Any) {
-       
+    func modifyItems<T: Object>(item: T, update: String, value: Any) {
+//        localRealm.create(T.self, value: [update: value], .)
     }
     
     

@@ -1,13 +1,13 @@
 //
-//  BookListView.swift
+//  ListView.swift
 //  SnapDiary
 //
-//  Created by yongseok lee on 2023/05/22.
+//  Created by yongseok lee on 2023/06/08.
 //
 
 import UIKit
-/*
-final class BookListView: BaseView {
+
+final class ListView: BaseView {
     
     let collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -16,7 +16,8 @@ final class BookListView: BaseView {
             //14+ 컬렉션뷰를 테이블뷰 스타일처럼 사용 가능 ( List configuration)
             var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
             configuration.showsSeparators = false
-//            configuration.backgroundColor = .brown            
+//            configuration.backgroundColor = .brown
+            
             let layout = UICollectionViewCompositionalLayout.list(using: configuration)
             return layout
         }
@@ -40,4 +41,3 @@ final class BookListView: BaseView {
     
     
 }
-*/
