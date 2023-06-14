@@ -8,7 +8,10 @@
 import UIKit
 //import RealmSwift
 
+
 //delete logic 수정필요.
+
+/*
 final class CardListViewController: BaseViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Int, Card>!
@@ -103,7 +106,7 @@ final class CardListViewController: BaseViewController {
     }
     @objc func editDeckTitleButtonPressed(sender: UIButton) {
         print("edittitle")
-        transition(DeckTitleViewContoller(), transitionStyle: .presentOverFull)
+        transition(DeckTitleViewContoller(deck: deck), transitionStyle: .presentOverFull)
     }
    
 }
@@ -158,3 +161,5 @@ extension CardListViewController: UICollectionViewDelegate {
     }
    
 }
+
+*/

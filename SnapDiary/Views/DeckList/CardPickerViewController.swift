@@ -18,6 +18,7 @@ final class CardPickerViewContoller: BaseViewController {
             makeSnapShot()
         }
     }
+//    private var deckCards: [Card] = []
     private var selectedCards:[Card] = []
     
     init(deck: Deck) {
@@ -43,9 +44,11 @@ final class CardPickerViewContoller: BaseViewController {
         mainView.addButton.addTarget(self, action: #selector(addButtonClicked), for: .touchUpInside)
         mainView.dismissButton.addTarget(self, action: #selector(dismissButtonPressed), for: .touchUpInside)
     }
+    
     private func fetchCards() {
         let result = self.repository.fetch(model: Card.self)
         self.cards = Array(result)
+        
         
     }
     @objc private func addButtonClicked() {
@@ -63,14 +66,22 @@ extension CardPickerViewContoller {
             var content = cell.defaultContentConfiguration()
             content.text = itemIdentifier.question
             content.prefersSideBySideTextAndSecondaryText = false
-            content.textToSecondaryTextVerticalPadding = 20
-            cell.contentConfiguration = content
+            content.textProperties.alignment = .center
+//            content.textToSecondaryTextVerticalPadding = 20
             var backgroundConfig = UIBackgroundConfiguration.listPlainCell()
+            if self.deck.cards.contains(itemIdentifier) {
+                backgroundConfig.backgroundColor = .systemGray
+                cell.isUserInteractionEnabled = false
+//                content.secondaryText = "이미 사용중인 카드입니다"
+            }
             backgroundConfig.backgroundColor = .systemGroupedBackground
             backgroundConfig.cornerRadius = 10
             backgroundConfig.strokeWidth = 1
             backgroundConfig.backgroundInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
+            cell.contentConfiguration = content
             cell.backgroundConfiguration = backgroundConfig
+            
+            
         }
 
         //numberOfItemsInSection, cellForItemAt

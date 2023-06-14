@@ -77,8 +77,14 @@ final class RealmRepository: RealmRepositoryType {
         }
     }
     
-    func modifyItems<T: Object>(item: T, update: String, value: Any) {
-//        localRealm.create(T.self, value: [update: value], .)
+    func modifyItem(completion: ()-> Void) {
+        do {
+            try localRealm.write {
+                completion()
+            }
+        } catch let error {
+            print(error)
+        }
     }
     
     

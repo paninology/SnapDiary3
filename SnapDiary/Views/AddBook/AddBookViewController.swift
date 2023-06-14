@@ -41,11 +41,10 @@ final class AddBookViewController: BaseViewController {
         super.viewWillAppear(animated)
         fetchedDecks = repository.fetch(model: Deck.self)
         mainView.tableView.reloadRows(at: [IndexPath(row: 0, section: 3)], with: .automatic)
-//        mainView.tableView.cellForRow(at: IndexPath(row: 0, section: 3)).
-     
-        print("addViewwill")
+        if decks != [] {
+            selectedDeck = decks[0]
+        }
     }
-
     
     override func configure() {
         super.configure()
@@ -53,11 +52,10 @@ final class AddBookViewController: BaseViewController {
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonPressed))
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         mainView.tableView.addGestureRecognizer(tapGesture)
-//        selectedDeck = decks[0]
-        print("selecttttttt", selectedDeck)
+        
+        print("selected deck:", selectedDeck)
         
     }
     private func newDeckName()-> String {
@@ -75,10 +73,8 @@ final class AddBookViewController: BaseViewController {
             view.endEditing(true) // 다른 곳 탭 시 키보드 내리기
         }
     
-    @objc private func saveButtonPressed(sender: UIButton) {
-      
+    @objc private func saveButtonPressed(sender: UIButton) {      
         let book = Book(title: titleText, deckID: ObjectId(), subtitle: subTitleText)
-//        repository.addItem(items: book)
     }
     @objc private func selectSwitchChanged(sender: UISwitch) {
         isNotiOn = sender.isOn
@@ -86,6 +82,12 @@ final class AddBookViewController: BaseViewController {
     }
     
     @objc private func cardDetailButtonPressed(sender: UIButton) {
+        guard decks != [] else {
+            let select = decks[0]
+            transition(DeckDetailViewController(deck: select), transitionStyle: .presentOverFull)
+            return
+        }
+      
         if let select = selectedDeck {
             transition(DeckDetailViewController(deck: select), transitionStyle: .presentOverFull)
         } else {
@@ -234,11 +236,11 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView.tag == 0 {
-            selectedOption = dateOptions[row] // 선택한 옵션 저장
-        } else {
+        if pickerView.tag == 0 { //알림옵션
+            selectedOption = dateOptions[row]
+        } else { //덱 피커
             if row < decks.count {
-                selectedDeck = decks[row] // 선택한 옵션 저장
+                selectedDeck = decks[row]
                 print("selected:", selectedDeck)
             }else {
                 selectedDeck = nil
