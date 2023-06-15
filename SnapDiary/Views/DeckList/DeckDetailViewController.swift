@@ -7,9 +7,7 @@
 
 import UIKit
 //import RealmSwift
-struct Section: Hashable {
-       var User: User
-   }
+
 //delete logic 수정필요.
 final class DeckDetailViewController: BaseViewController {
     
@@ -21,7 +19,7 @@ final class DeckDetailViewController: BaseViewController {
     private var isEditingNow = false {
         didSet {
             let title = isEditingNow ? "확인" : "편집"
-            makeSnapShot()
+            updateSection()
             mainView.editButton.setTitle(title, for: .normal)
             mainView.editDeckTitleButton.isHidden = !isEditingNow
         }
@@ -29,8 +27,8 @@ final class DeckDetailViewController: BaseViewController {
     private var deckCards: [Card] = [] {
         didSet {
             print(deckCards)
-//            fetchCards()
             makeSnapShot()
+            updateSection()
         }
     }
     
@@ -54,11 +52,9 @@ final class DeckDetailViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         deck = refreshDeckFromRealm(deck: deck) ?? deck
         fetchCards()
-        makeSnapShot()
-        updateDeckTitle()
+        updateSection()
         print("deckdetail willapear", deck.title)
     }
     
@@ -76,7 +72,6 @@ final class DeckDetailViewController: BaseViewController {
         cell.questionLabel.layer.borderWidth = 2
         cell.questionLabel.layer.borderColor = UIColor.systemGray.cgColor
         cell.questionLabel.font = .boldSystemFont(ofSize: 16)
-        //                cell.questionLabel.text = "새카드 추가하기"
     }
     
     private func fetchCards() {
@@ -87,10 +82,7 @@ final class DeckDetailViewController: BaseViewController {
         guard let realm = deck.realm else {
             return nil // Realm 인스턴스를 가져올 수 없는 경우 nil 반환
         }
-        
         let refreshedDeck = realm.object(ofType: Deck.self, forPrimaryKey: deck.objectId)
-
-        print("refres:",refreshedDeck)
         return refreshedDeck
     }
     
@@ -108,7 +100,6 @@ final class DeckDetailViewController: BaseViewController {
     
     @objc private func editButtonPressed(sender: UIButton) {
         isEditingNow.toggle()
-        //        print(isEditingNow)////
     }
     
     @objc private func deleteButtonPressed(sender: UIButton) {
@@ -125,14 +116,9 @@ final class DeckDetailViewController: BaseViewController {
         }
 
     }
-    func updateDeckTitle() {
-    }
-     func applySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Card>()
-        snapshot.appendSections([0])
-         snapshot.appendItems(self.deckCards, toSection: 0)
-//         snapshot.reloadItems(self.deckCards) //따로 빼고싶은데 에러난다
-         snapshot.appendItems([self.plusCard])
+    func updateSection() {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([0])
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
@@ -140,7 +126,7 @@ final class DeckDetailViewController: BaseViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Card>()
         snapshot.appendSections([0])
         snapshot.appendItems(self.deckCards, toSection: 0)
-        snapshot.reloadItems(self.deckCards) //따로 빼고싶은데 에러난다
+//        snapshot.reloadItems(self.deckCards) //따로 빼고싶은데 에러난다
         snapshot.appendItems([self.plusCard])
         self.dataSource.apply(snapshot)
     }
@@ -157,8 +143,7 @@ extension DeckDetailViewController {
         let headerRegistration = UICollectionView.SupplementaryRegistration
         <TitleSupplementaryView>(elementKind: "section-header-element-kind") { [weak self]
                    (supplementaryView, string, indexPath) in
-            guard let self = self else {return}
-//            supplementaryView.label.text = deck.title
+            guard let self = self else { return }
                }
         
         let cellRegistration = UICollectionView.CellRegistration<CardCollectionViewCell, Card>.init { [weak self] cell, indexPath, itemIdentifier in
@@ -182,7 +167,6 @@ extension DeckDetailViewController {
             let header = view.dequeueConfiguredReusableSupplementary(
                 using: headerRegistration , for: index)
             header.label.text = self.deck.title
-            print("suppl label", header.label.text)
             return header
                 }
         

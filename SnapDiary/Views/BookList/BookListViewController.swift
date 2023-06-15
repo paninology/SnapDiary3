@@ -9,22 +9,21 @@ import UIKit
 import RealmSwift
 
 final class BookListViewController: BaseViewController {
-    
-    
-    var dataSource: UICollectionViewDiffableDataSource<Int, Book>!
-    let mainView = ListView()
-    
-    var bookList: [Book] = [
-        Book(title: "내일기", deckID: ObjectId(), subtitle: "나의 생활에 관한 일기이다."),
-        Book(title: "연애일기", deckID: ObjectId(), subtitle: "여친과 데이트 한 일들을 기록하는 일기이다. ㅇㄴㅁㅇㄴㄹㅁㄴㅇㄹㅁㄴㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㅇㄴㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ")
-    ]
+        
+    private var dataSource: UICollectionViewDiffableDataSource<Int, Book>!
+    private let mainView = ListView()
+    private var bookList: [Book] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mainView
         configureDataSource()
-        makeSnapShot(books: bookList)
-        print(repository.localRealm.configuration.fileURL)
+        print(repository.localRealm.configuration.fileURL ?? "localRealm non found")
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bookList = Array(repository.fetch(model: Book.self))
+        makeSnapShot(items: bookList, dataSource: dataSource)
     }
     
     override func configure() {
@@ -35,8 +34,6 @@ final class BookListViewController: BaseViewController {
     @objc private func addBookButtonClicked() {
         transition(AddBookViewController(), transitionStyle: .push)
     }
-    
-    
 }
 
 //MARK: CollectionView datasource
@@ -59,20 +56,10 @@ extension BookListViewController {
             cell.backgroundConfiguration = backgroundConfig
         }
 
-        //numberOfItemsInSection, cellForItemAt
         dataSource = UICollectionViewDiffableDataSource(collectionView: mainView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-
-            return cell
             
+            return cell
         })
-        
-    }
-    
-    private func makeSnapShot(books: [Book]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Book>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(books, toSection: 0)
-        dataSource.apply(snapshot)
     }
 }

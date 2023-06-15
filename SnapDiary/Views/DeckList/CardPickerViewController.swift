@@ -79,11 +79,9 @@ extension CardPickerViewContoller {
             backgroundConfig.strokeWidth = 1
             backgroundConfig.backgroundInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
             cell.contentConfiguration = content
-            cell.backgroundConfiguration = backgroundConfig
-            
+            cell.backgroundConfiguration = backgroundConfig            
             
         }
-
         //numberOfItemsInSection, cellForItemAt
         dataSource = UICollectionViewDiffableDataSource(collectionView: mainView.listView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)

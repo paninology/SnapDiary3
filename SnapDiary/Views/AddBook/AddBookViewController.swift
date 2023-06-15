@@ -9,29 +9,29 @@ import UIKit
 import RealmSwift
 //새일기장: 제목, 알림옵션, 질문덱선택(설정), 사진
 //추천 일기옵션 제공
-//mvvm으로 변경??
+//mvvm + rx으로 변경??
 final class AddBookViewController: BaseViewController {
     
     private let mainView = AddBookView()
     private let inputFields = ["제목", "설명", "알림옵션", "질문카드 고르기"]
-    private let dateOptions = ["매일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "매월 1일", "매월 15일"]
+    private let dateOptions = NotiOption.allCases
     private var decks: [Deck] = []
     private var fetchedDecks: Results<Deck>? {
         didSet {
             if let result = fetchedDecks {
                 decks = Array(result)
-                print("fetched", decks)
             } else {
                 decks = []
             }
         }
     }
-    private var selectedOption: String?
+    private var selectedOption: NotiOption = NotiOption.everyday
     private var selectedDeck: Deck?
     private var isNotiOn = true
     private var titleText = ""
     private var subTitleText = ""
-    private var notificationDate: Date?
+    private var notificationDate = Date()
+    private var isNewDeck = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,14 +54,11 @@ final class AddBookViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonPressed))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         mainView.tableView.addGestureRecognizer(tapGesture)
-        
-        print("selected deck:", selectedDeck)
-        
     }
+    
     private func newDeckName()-> String {
         var newTitle = "내카드덱(1)"
         var count = 2
-
         while decks.contains(where: { $0.title == newTitle }) {
             newTitle = "내카드덱(\(count))"
             count += 1
@@ -73,8 +70,24 @@ final class AddBookViewController: BaseViewController {
             view.endEditing(true) // 다른 곳 탭 시 키보드 내리기
         }
     
-    @objc private func saveButtonPressed(sender: UIButton) {      
-        let book = Book(title: titleText, deckID: ObjectId(), subtitle: subTitleText)
+    @objc private func saveButtonPressed(sender: UIButton) {
+        print(titleText, subTitleText, isNotiOn, selectedOption, selectedDeck)
+        let noti = isNotiOn ? selectedOption : nil
+        guard titleText != "",
+              subTitleText != "" else {
+            showAlertWithCompletion(title: "입력이 완료되지 않았습니다.", message: "제목과 설명을 작성해주세요", hasCancelButton: false, completion: nil)
+            return
+        }
+        guard let deck = selectedDeck else {
+            showAlertWithCompletion(title: "선택된 덱이 없습니다.", message: "기존 덱을 선택하거나, 새로운 덱을 편집해서 나만의 덱을 만들어주세요", hasCancelButton: false, completion: nil)
+            return
+        }
+     
+        
+        let book = Book(title: titleText, deck: deck, subtitle: subTitleText, notiOption: noti)
+        repository.addItem(items: book)
+        refreshRootViewWillAppear(type: BookListViewController.self)
+        navigationController?.popViewController(animated: true)
     }
     @objc private func selectSwitchChanged(sender: UISwitch) {
         isNotiOn = sender.isOn
@@ -82,20 +95,15 @@ final class AddBookViewController: BaseViewController {
     }
     
     @objc private func cardDetailButtonPressed(sender: UIButton) {
-        guard decks != [] else {
-            let select = decks[0]
-            transition(DeckDetailViewController(deck: select), transitionStyle: .presentOverFull)
-            return
-        }
-      
-        if let select = selectedDeck {
-            transition(DeckDetailViewController(deck: select), transitionStyle: .presentOverFull)
+        if let selected = selectedDeck {
+            transition(DeckDetailViewController(deck: selected), transitionStyle: .presentOverFull)
         } else {
             let newDeck = Deck(title: newDeckName(), questions: List<Card>())
             repository.addItem(items: newDeck)
             transition(DeckDetailViewController(deck: newDeck), transitionStyle: .presentOverFull)
         }
     }
+    
     @objc private func dateChanged(sender: UIDatePicker) {
         notificationDate = sender.date
     }
@@ -119,11 +127,13 @@ extension AddBookViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = TextFeildTableViewCell()
             cell.textField.delegate = self
+            cell.textField.tag = 0
             return cell
         } else if indexPath.section == 1 {
             let cell = TextFeildTableViewCell()
             cell.textField.placeholder = "일기장에 대한 설명을 써주세요"
             cell.textField.delegate = self
+            cell.textField.tag = 1
             return cell
         
         } else if indexPath.section == 2 {
@@ -194,11 +204,15 @@ extension AddBookViewController: UITextFieldDelegate {
         // 글자 수가 최대 길이를 초과하면 입력을 막음
         return newText.count <= maxLength
     }
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        
         if textField.tag == 0 {
             titleText = textField.text ?? ""
+            print(textField.text, titleText)
         } else {
-            
+            subTitleText = textField.text ?? ""
+            print(textField.text, subTitleText)
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -225,7 +239,7 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 0 {
-            return dateOptions[row] // 각 피커뷰 항목의 제목
+            return dateOptions[row].rawValue // 각 피커뷰 항목의 제목
         } else {
             if row < decks.count {
                 return decks[row].title
@@ -241,9 +255,12 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         } else { //덱 피커
             if row < decks.count {
                 selectedDeck = decks[row]
-                print("selected:", selectedDeck)
+                isNewDeck = false
+                print(row, decks.count, decks[row])
             }else {
                 selectedDeck = nil
+                isNewDeck = true
+                print(row)
             }
         }
     }

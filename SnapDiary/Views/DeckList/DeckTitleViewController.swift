@@ -8,10 +8,9 @@
 import UIKit
 
 final class DeckTitleViewContoller: BaseViewController, UITextFieldDelegate {
-    
-    
-    let mainView = DeckTitleView()
-    let deck: Deck
+        
+    private let mainView = DeckTitleView()
+    private let deck: Deck
   
     init(deck: Deck) {
         self.deck = deck
@@ -57,8 +56,6 @@ final class DeckTitleViewContoller: BaseViewController, UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         saveButtonSet()
     }
-    
-    
     
 }
 

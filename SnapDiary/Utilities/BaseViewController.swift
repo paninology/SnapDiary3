@@ -43,6 +43,12 @@ class BaseViewController: UIViewController {
             vc.viewWillAppear(true)
         }
     }
+     func makeSnapShot<T: Hashable>(items: [T], dataSource: UICollectionViewDiffableDataSource<Int, T>) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, T>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(items, toSection: 0)
+        dataSource.apply(snapshot)
+    }
     
     @objc func dismissButtonPressed() {
         dismiss(animated: true)
