@@ -21,8 +21,8 @@ final class RealmRepository: RealmRepositoryType {
    
     let localRealm = try! Realm()
     
-    func showRealmDB() {
-        print(localRealm.configuration.fileURL)
+    func showRealmURL() {
+        print(localRealm.configuration.fileURL ?? "realmURL error")
     }
    
     func fetch<T: RealmFetchable>(model: T.Type) -> Results<T> {
@@ -58,6 +58,13 @@ final class RealmRepository: RealmRepositoryType {
             localRealm.create(T.self, value: [update: value] , update: .modified)
 
         }
+//        if let realm = try? Realm(),
+//           let card = realm.object(ofType: Card.self, forPrimaryKey: primaryKey) {
+//            try? realm.write {
+//                card.question = mainView.textView.text
+//                // 다른 속성도 필요에 따라 수정할 수 있음
+//            }
+//        }
         
     }
 
@@ -77,14 +84,27 @@ final class RealmRepository: RealmRepositoryType {
         }
     }
     
-    func modifyItem(completion: ()-> Void) {
+    func modifyItem(completion: (_ realm: Realm)-> Void) {
         do {
             try localRealm.write {
-                completion()
+                completion(localRealm)
             }
         } catch let error {
             print(error)
         }
+    }
+    func cardUsingDeck(card: Card)-> [String] {
+        // 예시로 찾을 특정 Card의 objectId
+        let cardObjectId = card.objectId
+
+        // cards에 특정 Card를 포함하는 모든 Deck을 쿼리합니다
+        let decksWithCard = localRealm.objects(Deck.self).filter("ANY cards.objectId == %@", cardObjectId)
+        // 결과 출력
+        var deckTitles: [String] = []
+            for deck in decksWithCard {
+                deckTitles.append(deck.title)
+            }
+        return deckTitles
     }
     
     

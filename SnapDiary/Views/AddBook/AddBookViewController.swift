@@ -71,7 +71,6 @@ final class AddBookViewController: BaseViewController {
         }
     
     @objc private func saveButtonPressed(sender: UIButton) {
-        print(titleText, subTitleText, isNotiOn, selectedOption, selectedDeck)
         let noti = isNotiOn ? selectedOption : nil
         guard titleText != "",
               subTitleText != "" else {
@@ -209,10 +208,8 @@ extension AddBookViewController: UITextFieldDelegate {
         
         if textField.tag == 0 {
             titleText = textField.text ?? ""
-            print(textField.text, titleText)
         } else {
             subTitleText = textField.text ?? ""
-            print(textField.text, subTitleText)
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

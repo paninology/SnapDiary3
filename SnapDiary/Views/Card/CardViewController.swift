@@ -20,6 +20,9 @@ final class CardViewController: BaseViewController {
             setSaveButton()
         }
     }
+//    private var usingDecks:[Deck] {
+//        repository.cardUsingDeck(card: card)
+//    }
 
 
     init(card: Card?) {
@@ -33,8 +36,6 @@ final class CardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        repository.showRealmDB()
- 
     }
     
     override func configure() {
@@ -49,6 +50,7 @@ final class CardViewController: BaseViewController {
         mainView.dismissButton.addTarget(self, action: #selector(dismissButtonPressed), for: .touchUpInside)
         mainView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         setSaveButton()
+        mainView.deckListLabel.text = getUsingDecks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,25 +76,38 @@ final class CardViewController: BaseViewController {
             mainView.saveButton.setTitleColor(.systemBlue, for: .normal)
         }
     }
+    
+    private func getUsingDecks()-> String {
+        guard let card = card else {
+            return "현재 사용중이지 않는 카드입니다."
+        }
+        let text = repository.cardUsingDeck(card: card).joined(separator: ", ")
+        return "현재 \(text) 에서 이 카드를 사용중입니다."
+        
+    }
 
     
     @objc private func saveButtonPressed() {
         guard mainView.textView.text != nil else {
             mainView.makeToast("내용을 입력해주세요")
-            
             return}
+        showAlertWithCompletion(title: "수정하시겠습니까?", message: "수정된 내용은 이 카드를 사용중인 모든 덱에 적용됩니다. \(getUsingDecks())", hasCancelButton: true) { [weak self]_ in
+            guard let self = self else {return}
+            if card != nil { //수정
+                repository.modifyItem { _ in
+                    self.card!.question = self.mainView.textView.text
+                }
+            } else { //신규
+                let newCard = Card(question: mainView.textView.text)
+                repository.addItem(items: newCard)
+            }
+            if let mainViewController = presentingViewController as? CardPickerViewContoller {
+                mainViewController.viewWillAppear(true)
+            }
+            dismiss(animated: true)
+        }
       
-        if card != nil { //수정
-//            repository.updateItem(item: Card, update: "question", value: mainView.textView.text)
-            repository.localRealm.create(Card.self, value: ["question": mainView.textView.text], update: .modified)
-        } else { //신규
-            let newCard = Card(question: mainView.textView.text)
-            repository.addItem(items: newCard)
-        }
-        dismiss(animated: true)
-        if let mainViewController = presentingViewController as? DeckDetailViewController {
-            mainViewController.viewWillAppear(true)
-        }
+        
     }
     @objc private func keyboardWillShow(notification: NSNotification) {
         isKeyboardVisible = true

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8F77D86F2A26E8B900BC0054 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F77D86E2A26E8B900BC0054 /* CardView.swift */; };
 		8F77D8712A26E8C100BC0054 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F77D8702A26E8C100BC0054 /* CardViewController.swift */; };
+		8F95F7A12A4013970080D42A /* SingleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A02A4013970080D42A /* SingleButtonView.swift */; };
+		8F95F7A32A4137A90080D42A /* CollectionViewBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A22A4137A90080D42A /* CollectionViewBaseCell.swift */; };
 		8FB825C12A29A77F00C59ED8 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */; };
 		8FBEDF122A2D7C3D0030E41C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 8FBEDF112A2D7C3D0030E41C /* Toast */; };
 		8FBEDF152A3057130030E41C /* DeckTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */; };
@@ -74,6 +76,8 @@
 /* Begin PBXFileReference section */
 		8F77D86E2A26E8B900BC0054 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8F77D8702A26E8C100BC0054 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		8F95F7A02A4013970080D42A /* SingleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonView.swift; sourceTree = "<group>"; };
+		8F95F7A22A4137A90080D42A /* CollectionViewBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewBaseCell.swift; sourceTree = "<group>"; };
 		8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckTitleViewController.swift; sourceTree = "<group>"; };
 		8FBEDF172A305AF10030E41C /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
@@ -250,6 +254,7 @@
 				8FDBC44F2A16FDC200E9B619 /* BaseViewController.swift */,
 				8FDBC4612A1B3F8900E9B619 /* BaseView.swift */,
 				8FBEDF1D2A3203650030E41C /* ListView.swift */,
+				8F95F7A02A4013970080D42A /* SingleButtonView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				8FDBC4742A1DCE1C00E9B619 /* TextFeildTableViewCell.swift */,
+				8F95F7A22A4137A90080D42A /* CollectionViewBaseCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -505,6 +511,7 @@
 				8FDBC4502A16FDC200E9B619 /* BaseViewController.swift in Sources */,
 				8FDBC4822A20742500E9B619 /* DeckPickerCell.swift in Sources */,
 				8F77D8712A26E8C100BC0054 /* CardViewController.swift in Sources */,
+				8F95F7A12A4013970080D42A /* SingleButtonView.swift in Sources */,
 				8FDBC4872A2080E400E9B619 /* DeckDetailViewController.swift in Sources */,
 				8FDBC45C2A17136C00E9B619 /* Book.swift in Sources */,
 				8FBEDF1A2A31AF740030E41C /* CardListViewController.swift in Sources */,
@@ -521,6 +528,7 @@
 				8FDBC48B2A208AF100E9B619 /* CardCollectionViewCell.swift in Sources */,
 				8FDBC48E2A24469000E9B619 /* Constants.swift in Sources */,
 				8FBEDF182A305AF10030E41C /* CustomButtons.swift in Sources */,
+				8F95F7A32A4137A90080D42A /* CollectionViewBaseCell.swift in Sources */,
 				8FDBC4732A1DCAE900E9B619 /* AddBookViewController.swift in Sources */,
 				8FDBC46F2A1DAB1000E9B619 /* AddBookView.swift in Sources */,
 				8FDBC4532A17043A00E9B619 /* BookListViewController.swift in Sources */,

@@ -36,7 +36,7 @@ final class DeckTitleViewContoller: BaseViewController, UITextFieldDelegate {
         guard let text = mainView.titleTextField.text else {
             return
         }
-        repository.modifyItem {
+        repository.modifyItem {_ in 
             deck.title = text
         }
         refreshRootViewWillAppear(type: DeckDetailViewController.self)

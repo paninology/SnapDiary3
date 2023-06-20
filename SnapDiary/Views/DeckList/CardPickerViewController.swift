@@ -15,11 +15,12 @@ final class CardPickerViewContoller: BaseViewController {
     private let deck: Deck
     private var cards: [Card] = [] {
         didSet {
-            makeSnapShot()
+            makeSnapShot(items: cards, dataSource: dataSource)
         }
     }
 //    private var deckCards: [Card] = []
     private var selectedCards:[Card] = []
+    private var plusCard = Card(question: "새카드 만들기")
     
     init(deck: Deck) {
         self.deck = deck
@@ -34,8 +35,14 @@ final class CardPickerViewContoller: BaseViewController {
         super.viewDidLoad()
         view = mainView
         configureDataSource()
-        makeSnapShot()
+//        makeSnapShot(items: cards, dataSource: dataSource)
         fetchCards()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchCards()
+        updateSection()
+        print("cardPciker view will")
     }
     
     override func configure() {
@@ -48,31 +55,59 @@ final class CardPickerViewContoller: BaseViewController {
     private func fetchCards() {
         let result = self.repository.fetch(model: Card.self)
         self.cards = Array(result)
-        
-        
+     
+    }
+   
+    private func addNewCard() {
+        var snapShot = dataSource.snapshot()
+//        snapShot.appendSections([0])
+        snapShot.appendItems([plusCard], toSection: 0)
+        dataSource.apply(snapShot)
+    }
+    override func makeSnapShot<T>(items: [T], dataSource: UICollectionViewDiffableDataSource<Int, T>) where T : Hashable {
+        super.makeSnapShot(items: items, dataSource: dataSource)
+        addNewCard()
+    }
+    private func updateSection() {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([0])
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     @objc private func addButtonClicked() {
+      
         repository.appendCardToDeck(cards: selectedCards, deck: deck)
         refreshRootViewWillAppear(type: DeckDetailViewController.self)
         dismiss(animated: true)
     }
-    
+    @objc private func cellButtonPressed(sender: UIButton) {
+      
+        transition(CardViewController(card: cards[sender.tag]), transitionStyle: .presentOverFull)
+    }
 }
 
 //MARK: CollectionView datasource
 extension CardPickerViewContoller {
     private func configureDataSource() {
+        /*
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Card>.init { cell, indexPath, itemIdentifier in
             var content = cell.defaultContentConfiguration()
             content.text = itemIdentifier.question
             content.prefersSideBySideTextAndSecondaryText = false
             content.textProperties.alignment = .center
-//            content.textToSecondaryTextVerticalPadding = 20
             var backgroundConfig = UIBackgroundConfiguration.listPlainCell()
-            if self.deck.cards.contains(itemIdentifier) {
-                backgroundConfig.backgroundColor = .systemGray
-                cell.isUserInteractionEnabled = false
-//                content.secondaryText = "이미 사용중인 카드입니다"
+            if indexPath.item == self.cards.count { //새카드만들기 셀
+                backgroundConfig.backgroundColor = .systemGray5
+            } else { //기존 카드셀
+                if self.deck.cards.contains(itemIdentifier) { //이미 사용중인 카드
+                    cell.alpha = 0.5
+//                    cell.isUserInteractionEnabled = false
+                    cell.selections
+                    print(itemIdentifier, cell.alpha)
+                }
+                let cellView = SingleButtonView()
+                cellView.button.addTarget(self, action: #selector(self.cellButtonPressed), for: .touchUpInside)
+                cell.accessories = [.customView(configuration: .init(customView: cellView, placement: .trailing()))]
+                cellView.button.tag = indexPath.item
             }
             backgroundConfig.backgroundColor = .systemGroupedBackground
             backgroundConfig.cornerRadius = 10
@@ -82,34 +117,27 @@ extension CardPickerViewContoller {
             cell.backgroundConfiguration = backgroundConfig            
             
         }
+         */
+        let cellRegistration = UICollectionView.CellRegistration
         //numberOfItemsInSection, cellForItemAt
         dataSource = UICollectionViewDiffableDataSource(collectionView: mainView.listView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-
             return cell
-            
         })
-        
     }
     
-    private func makeSnapShot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Card>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(cards, toSection: 0)
-        dataSource.apply(snapshot)
-    }
+
 }
 
 extension CardPickerViewContoller: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
-              return
-          }
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        guard indexPath.item < cards.count else {
+            transition(CardViewController(card: nil), transitionStyle: .presentOverFull)
+            return }
         let selected = cards[indexPath.item]
         var config = cell.backgroundConfiguration
-
         if selectedCards.contains(selected) {
                 if let index = selectedCards.firstIndex(of: selected) {
                     selectedCards.remove(at: index)
@@ -121,6 +149,5 @@ extension CardPickerViewContoller: UICollectionViewDelegate {
                 config?.backgroundColor = .systemGray3
                 cell.backgroundConfiguration = config
             }
-
     }
 }

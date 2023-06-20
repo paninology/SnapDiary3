@@ -37,11 +37,17 @@ class CardView: BaseView {
      
         return view
     }()
+    let deckListLabel: UILabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.numberOfLines = 0
+        return view
+    }()
  
     
     override func configure() {
         super.configure()
-        [ centerView,placeHolder, textView, dismissButton, saveButton].forEach { addSubview($0)}
+        [ centerView,placeHolder, textView, dismissButton, saveButton, deckListLabel].forEach { addSubview($0)}
         backgroundColor = .clear
     }
     override func setConstraints() {
@@ -55,7 +61,12 @@ class CardView: BaseView {
         textView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(centerView.snp.horizontalEdges)
             make.top.equalTo(saveButton.snp.bottom)
-            make.bottom.equalTo(centerView.snp.bottom)
+//            make.bottom.equalTo(centerView.snp.bottom)
+            make.bottom.equalTo(deckListLabel.snp.top)
+        }
+        deckListLabel.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(centerView.snp.horizontalEdges).inset(4)
+            make.bottom.equalTo(centerView.snp.bottom).inset(4)
         }
         dismissButton.snp.makeConstraints { make in
             make.top.equalTo(centerView.snp.top)

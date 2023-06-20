@@ -18,7 +18,7 @@ final class BookListViewController: BaseViewController {
         super.viewDidLoad()
         view = mainView
         configureDataSource()
-        print(repository.localRealm.configuration.fileURL ?? "localRealm non found")
+        repository.showRealmURL()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
