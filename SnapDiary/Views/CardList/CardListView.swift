@@ -59,7 +59,6 @@ final class CardListView: BaseView {
     
     override func configure() {
         super.configure()
-        backgroundColor = Constants.Color.background
         [dismissButton, collectionView, editButton, editDeckTitleButton].forEach {addSubview($0)}
     }
     

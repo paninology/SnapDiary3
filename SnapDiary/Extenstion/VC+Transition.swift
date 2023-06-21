@@ -20,7 +20,7 @@ extension UIViewController {
 //        case popUpToPreView
     }
     
-    func transition<T: UIViewController>(_ viewController: T, transitionStyle: TransitionStyle = .present) {
+    func transition<T: UIViewController>(_ viewController: T, transitionStyle: TransitionStyle) {
         
         switch transitionStyle {
         case .present:

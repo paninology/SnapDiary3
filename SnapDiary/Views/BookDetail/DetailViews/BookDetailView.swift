@@ -8,25 +8,29 @@ import UIKit
 //1.일기장 제목, 2.설명, 3.알림옵션, 4.덱이름(수정포함),5.덱 카드들(컬렉션뷰 한줄 가로뷰)?
 final class BookDetailView: BaseView {
     
-    
     let title: UILabel = {
         let view = UILabel()
 //        view.numberOfLines = 0
+        view.textAlignment = .center
         return view
     }()
     //    let title
     let subtitle: UILabel = {
         let view = UILabel()
+        view.font = .systemFont(ofSize: 12)
+        view.textAlignment = .center
         view.numberOfLines = 0
         return view
     }()
     
     let notiOption: UILabel = {
         let view = UILabel()
+        view.font = .systemFont(ofSize: 12)
         return view
     }()
     let deckInfo: UILabel = {
         let view = UILabel()
+        view.font = .systemFont(ofSize: 12)
         return view
     }()
     
@@ -38,7 +42,7 @@ final class BookDetailView: BaseView {
         super.setConstraints()
         let margin = 8
         title.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(margin)
+            make.horizontalEdges.equalToSuperview().inset(4)
             make.top.equalToSuperview().inset(margin)
         }
         subtitle.snp.makeConstraints { make in

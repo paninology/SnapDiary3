@@ -33,7 +33,7 @@ class BaseView: UIView {
     }
     
     func configure() {
-       
+        backgroundColor = Constants.Color.background
     }
     
     func setConstraints() {

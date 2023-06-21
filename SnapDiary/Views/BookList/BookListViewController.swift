@@ -28,6 +28,7 @@ final class BookListViewController: BaseViewController {
     
     override func configure() {
         super.configure()
+        mainView.collectionView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addBookButtonClicked))
     }
     
@@ -62,5 +63,11 @@ extension BookListViewController {
             
             return cell
         })
+    }
+}
+
+extension BookListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        transition(BookViewController(book: bookList[indexPath.item]), transitionStyle: .push)
     }
 }

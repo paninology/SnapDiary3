@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    func makeRoundLayer(bgColor: UIColor) {
+    func makeRoundLayer(bgColor: UIColor = Constants.Color.background) {
         layer.cornerRadius = 8
         clipsToBounds = true
         backgroundColor = bgColor
