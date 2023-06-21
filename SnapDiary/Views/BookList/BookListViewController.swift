@@ -38,6 +38,7 @@ final class BookListViewController: BaseViewController {
 
 //MARK: CollectionView datasource
 extension BookListViewController {
+    //UICollectionViewListCell>>커스텀셀로 변경할것!! 현재는 참고용
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Book>.init { cell, indexPath, itemIdentifier in
             var content = cell.defaultContentConfiguration()

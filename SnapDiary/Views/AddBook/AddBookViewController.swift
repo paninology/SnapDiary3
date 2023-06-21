@@ -81,9 +81,8 @@ final class AddBookViewController: BaseViewController {
             showAlertWithCompletion(title: "선택된 덱이 없습니다.", message: "기존 덱을 선택하거나, 새로운 덱을 편집해서 나만의 덱을 만들어주세요", hasCancelButton: false, completion: nil)
             return
         }
-     
-        
-        let book = Book(title: titleText, deck: deck, subtitle: subTitleText, notiOption: noti)
+       
+        let book = Book(title: titleText, deck: deck, subtitle: subTitleText, notiOption: noti, notiDate: notificationDate)
         repository.addItem(items: book)
         refreshRootViewWillAppear(type: BookListViewController.self)
         navigationController?.popViewController(animated: true)
@@ -193,6 +192,7 @@ extension AddBookViewController: UITableViewDelegate, UITableViewDataSource {
     
     
 }
+// MARK: - textField
 extension AddBookViewController: UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -261,8 +261,5 @@ extension AddBookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             }
         }
     }
-   
-
 }
-
 

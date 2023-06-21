@@ -42,23 +42,24 @@ class CollectionViewBaseCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.addSubview(centerView)
-        contentView.addSubview(titleLabel)
         contentView.addSubview(button)
+        contentView.addSubview(titleLabel)
         //            contentView.addSubview(detailLabel)
         //            contentView.addSubview(disclosureImageView)
+        centerView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(8)
+            make.verticalEdges.equalToSuperview().inset(4)
+        }
+        button.snp.makeConstraints { make in
+            make.verticalEdges.equalToSuperview().inset(8)
+            make.trailing.equalToSuperview().inset(12)
+            make.width.equalTo(44)
+        }
         titleLabel.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(12)
             make.trailing.equalTo(button.snp.leading).inset(4)
             
-        }
-        button.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview().inset(8)
-            make.trailing.equalToSuperview().inset(12)
-        }
-        centerView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(8)
-            make.verticalEdges.equalToSuperview().inset(4)
         }
         
         

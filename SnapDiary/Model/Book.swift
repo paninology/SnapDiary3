@@ -29,14 +29,16 @@ final class Book: Object {
     @Persisted var deck: Deck? //덱 ID(필수) objectID 타입?? string? deck?
     @Persisted var subtitle: String //
     @Persisted var notiOption: NotiOption.RawValue? //
+    @Persisted var notiDate: Date//
     
     
     
-    convenience init(title: String, deck: Deck, subtitle: String, notiOption: NotiOption? ) {
+    convenience init(title: String, deck: Deck, subtitle: String, notiOption: NotiOption?,notiDate: Date ) {
         self.init()
         self.title = title
         self.deck = deck
         self.subtitle = subtitle
         self.notiOption = notiOption?.rawValue
+        self.notiDate = notiDate
     }
 }

@@ -12,6 +12,8 @@
 		8F95F7A12A4013970080D42A /* SingleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A02A4013970080D42A /* SingleButtonView.swift */; };
 		8F95F7A32A4137A90080D42A /* CollectionViewBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A22A4137A90080D42A /* CollectionViewBaseCell.swift */; };
 		8F95F7A52A413BE40080D42A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A42A413BE40080D42A /* UIView+Extension.swift */; };
+		8F95F7A82A4279780080D42A /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A72A4279780080D42A /* BookDetailViewController.swift */; };
+		8F95F7AA2A42799C0080D42A /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F95F7A92A42799C0080D42A /* BookDetailView.swift */; };
 		8FB825C12A29A77F00C59ED8 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */; };
 		8FBEDF122A2D7C3D0030E41C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 8FBEDF112A2D7C3D0030E41C /* Toast */; };
 		8FBEDF152A3057130030E41C /* DeckTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */; };
@@ -80,6 +82,8 @@
 		8F95F7A02A4013970080D42A /* SingleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonView.swift; sourceTree = "<group>"; };
 		8F95F7A22A4137A90080D42A /* CollectionViewBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewBaseCell.swift; sourceTree = "<group>"; };
 		8F95F7A42A413BE40080D42A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		8F95F7A72A4279780080D42A /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
+		8F95F7A92A42799C0080D42A /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
 		8FB825C02A29A77F00C59ED8 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		8FBEDF142A3057130030E41C /* DeckTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckTitleViewController.swift; sourceTree = "<group>"; };
 		8FBEDF172A305AF10030E41C /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
@@ -162,6 +166,15 @@
 				8FBEDF192A31AF740030E41C /* CardListViewController.swift */,
 			);
 			path = CardList;
+			sourceTree = "<group>";
+		};
+		8F95F7A62A42793F0080D42A /* BookDetail */ = {
+			isa = PBXGroup;
+			children = (
+				8F95F7A92A42799C0080D42A /* BookDetailView.swift */,
+				8F95F7A72A4279780080D42A /* BookDetailViewController.swift */,
+			);
+			path = BookDetail;
 			sourceTree = "<group>";
 		};
 		8FB825BF2A29A76600C59ED8 /* Realm */ = {
@@ -269,6 +282,7 @@
 				8FDBC4832A2080BE00E9B619 /* DeckList */,
 				8FDBC4672A1D993100E9B619 /* BookList */,
 				8FDBC46D2A1DAAC500E9B619 /* AddBook */,
+				8F95F7A62A42793F0080D42A /* BookDetail */,
 				8FDBC46A2A1D9D1900E9B619 /* Write */,
 			);
 			path = Views;
@@ -533,8 +547,10 @@
 				8FDBC48E2A24469000E9B619 /* Constants.swift in Sources */,
 				8FBEDF182A305AF10030E41C /* CustomButtons.swift in Sources */,
 				8F95F7A32A4137A90080D42A /* CollectionViewBaseCell.swift in Sources */,
+				8F95F7A82A4279780080D42A /* BookDetailViewController.swift in Sources */,
 				8FDBC4732A1DCAE900E9B619 /* AddBookViewController.swift in Sources */,
 				8FDBC46F2A1DAB1000E9B619 /* AddBookView.swift in Sources */,
+				8F95F7AA2A42799C0080D42A /* BookDetailView.swift in Sources */,
 				8FDBC4532A17043A00E9B619 /* BookListViewController.swift in Sources */,
 				8FDBC4902A2446E500E9B619 /* Colors.swift in Sources */,
 				8FDBC4692A1D9D1300E9B619 /* WriteViewController.swift in Sources */,
