@@ -7,6 +7,6 @@
 
 import UIKit
 //
-final class BookDetailViewController: BaseViewController {
+final class BookViewController: BaseViewController {
     
 }
