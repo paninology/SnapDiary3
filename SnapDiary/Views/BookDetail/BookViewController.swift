@@ -9,4 +9,5 @@ import UIKit
 //
 final class BookViewController: BaseViewController {
     
+    let mainView = BookView()
 }
