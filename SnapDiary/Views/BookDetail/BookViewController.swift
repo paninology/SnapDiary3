@@ -53,7 +53,7 @@ final class BookViewController: BaseViewController {
         cell.isFlipped.toggle()
     }
     @objc private func newDiaryButtonPressed(sender: UIButton) {
-        
+        transition(WriteViewController(book: book), transitionStyle: .presentOverFull)
     }
     
     

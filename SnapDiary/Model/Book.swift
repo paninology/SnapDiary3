@@ -26,7 +26,7 @@ final class Book: Object {
     
     @Persisted(primaryKey: true) var objectId: ObjectId
     @Persisted var title: String //제목(필수)
-    @Persisted var deck: Deck? //덱 ID(필수) objectID 타입?? string? deck?
+    @Persisted var deck: Deck? //왜 옵셔널인가...에러난다..왜인지 모르렜다
     @Persisted var subtitle: String //
     @Persisted var notiOption: NotiOption.RawValue? //
     @Persisted var notiDate: Date//

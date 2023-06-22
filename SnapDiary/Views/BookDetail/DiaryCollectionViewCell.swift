@@ -68,11 +68,11 @@ final class DiaryCollectionViewCell: UICollectionViewCell {
         dateLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(8)
             make.top.equalToSuperview().inset(8)
-            make.height.equalTo(28)
+            make.height.equalTo(24)
         }
         questionLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(4)
-            make.top.equalTo(dateLabel.snp.bottom).inset(8)
+            make.top.equalTo(dateLabel.snp.bottom)
             make.bottom.equalToSuperview().inset(4)
         }
         diaryLabel.snp.makeConstraints { make in

@@ -27,6 +27,7 @@ final class CardPickerView: BaseView {
     
     override func configure() {
         super.configure()
+        backgroundColor = .clear
         [centerView, listView, dismissButton, addButton].forEach{addSubview($0)}
         centerView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(44)
